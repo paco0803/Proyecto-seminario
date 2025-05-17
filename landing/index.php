@@ -1,3 +1,10 @@
+<?php
+session_start();
+require_once('../conexion.php');
+require_once('./categorias.php');
+require_once('./productos.php');
+$conn = connectBD();
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -7,9 +14,12 @@
     <link rel="stylesheet" href="../estilos/estilos_landig.css">
 </head>
 <body>
-    <nav>
+    <header>
+        <div class="contenedor_logo">
+              <img src="" alt="logo">
+        </div>
         <div class="contendor_buscador">
-            <img src="" alt="logo">
+          
                 <input type="text" placeholder="Buscar">
         </div>
 
@@ -17,6 +27,17 @@
             <button>Iniciar Secion</button>
             <button>Registro</button> 
         </div>
+    </header>
+    <nav>
+         <?php mostrar_categorias($conn) ?>
+        
+       
     </nav>
+
+     <section class="section_productos">
+           <?php mostrar_productos($conn) ?>
+            
+            
+        </section>
 </body>
 </html>
