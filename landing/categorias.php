@@ -1,5 +1,6 @@
 <?php 
- 
+ require_once('./productos.php');
+
 function mostrar_categorias($conn){
       // Verificar conexión
         if(!$conn){
@@ -13,7 +14,11 @@ function mostrar_categorias($conn){
         if($resultado && mysqli_num_rows($resultado) > 0) {
             foreach($categorias as $fila){
 
-                echo '<button onclik=">'.htmlspecialchars($fila['nombre_categoria']).'</button>';
+            echo '<form method="post" action="index.php">';
+            echo '<button type="submit" name="id_categoria" value="' . htmlspecialchars($fila['id_categoria']) . '">';
+            echo htmlspecialchars($fila['nombre_categoria']);
+            echo '</button>';
+            echo '</form>';
 
             }
           
