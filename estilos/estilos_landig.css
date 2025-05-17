@@ -78,3 +78,16 @@ body {
     .productos div{
         padding-top: 9rem;
     }
+
+   .section_boton{
+    padding-bottom: 4rem;
+    text-align: center;
+   }
+   .section_boton button{
+    font-size: 1rem;
+    cursor: pointer;
+    border: none;
+    border-radius: 5px;
+    padding: 0.5rem 3rem;
+   }
+   

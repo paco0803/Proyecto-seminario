@@ -3,7 +3,7 @@ session_start();
 require_once('../conexion.php');
 require_once('./categorias.php');
 require_once('./productos.php');
-$conn = connectBD();
+$conn = conexionBD();
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -24,7 +24,10 @@ $conn = connectBD();
         </div>
 
         <div class="contenedor_botones">
-            <button>Iniciar Secion</button>
+            <a href="../login_index.php">
+                <button>Iniciar Secion</button>
+            </a>
+            
             <button>Registro</button> 
         </div>
     </header>
@@ -36,8 +39,12 @@ $conn = connectBD();
 
      <section class="section_productos">
            <?php mostrar_productos($conn) ?>
-            
-            
-        </section>
+     </section>
+
+     <section class="section_boton">
+        <a href="../login_index.php">
+            <button>Ver mas</button>
+        </a>
+     </section>
 </body>
 </html>
