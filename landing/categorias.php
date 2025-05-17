@@ -1,5 +1,5 @@
 <?php 
-
+ 
 function mostrar_categorias($conn){
       // Verificar conexión
         if(!$conn){
@@ -12,7 +12,9 @@ function mostrar_categorias($conn){
         $categorias= mysqli_fetch_all($resultado, MYSQLI_ASSOC);
         if($resultado && mysqli_num_rows($resultado) > 0) {
             foreach($categorias as $fila){
-                echo '<button>'.htmlspecialchars($fila['nombre_categoria']).'</button>';
+
+                echo '<button onclik=">'.htmlspecialchars($fila['nombre_categoria']).'</button>';
+
             }
           
         } else {
@@ -20,6 +22,7 @@ function mostrar_categorias($conn){
         }
         
         // Cerrar conexión
+        
 }
-
+//crear un formulario por cada boton pára enviar el id y el nombre para productos y recibirlos 
 ?>
