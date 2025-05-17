@@ -11,6 +11,6 @@
     
     <p>Se ha producido un error de acceso, verifique su nombre de usuario y contraseña</p>
     
-    <p><a href="index.php">Volver a intentar</a></p>
+    <p><a href="login_index.php">Volver a intentar</a></p>
 </body>
 </html>

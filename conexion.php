@@ -2,8 +2,8 @@
 function conexionBD(){
     #Variables de sesion para la base de datos
     $server = "localhost";
-    $username = "ProyectoSeminario";
-    $password = "proyectoseminario";
+    $username = "root";
+    $password = "";
     $data_base = "proyectoseminario";
 
     #conexion a base de datos
