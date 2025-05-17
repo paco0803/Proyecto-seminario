@@ -1,7 +1,7 @@
 <?php
 session_start();
 
-include("conexion.php"); #Importacion del fichero conexion
+include("../conexion.php"); #Importacion del fichero conexion
 
 #Variables recibidas por metodo post del login_index
 $email = $_POST['email'];
@@ -17,7 +17,7 @@ if($conexion == false){
 #Estableciendo caracteres UTF8                           
 mysqli_set_charset($conexion, "utf8");
 
-$consulta = "SELECT * from usuarios where correo_usuario = $email and clave_usuario = $password_encriptado";
+$consulta = "SELECT * from usuarios where correo_usuario = '$email' and clave_usuario = '$password_encriptado'";
 
 $query = mysqli_query($conexion, $consulta); #consulta a base de datos usando la varible $consulta
 
@@ -32,13 +32,13 @@ if(mysqli_num_rows($query)>0){ #Verificacion de existencia del usuario con las c
     $_SESSION['ultimo_acceso'] = date("Y-m-d H:i:s");
 
     #Determinar si el usuario que inicio sesion es un administrador o un cliente
-    switch($fila['tipo']){
+    switch($_SESSION['tipo']){
         case 1:
-            header("location: admin.php");
+            header("location: ../admin.php");
             break;
 
         case 2:
-            header("location: cliente.php");
+            header("location: ../cliente.php");
             break;
     }
      mysqli_close($$conexion);
@@ -48,8 +48,4 @@ if(mysqli_num_rows($query)>0){ #Verificacion de existencia del usuario con las c
      mysqli_close($conexion);
     exit;
 }
-
-
-
-
 ?>
