@@ -17,9 +17,13 @@
             $productos= mysqli_fetch_all($resultado_producto, MYSQLI_ASSOC);
 
              if($resultado_producto && mysqli_num_rows($resultado_producto)>0){
+                
                     foreach($productos as $producto ){
                         echo '
-                        <div class="productos">>
+                        <div class="productos">
+                        <div class="imagen">
+                            <h1>'.htmlspecialchars("aqui debe ir la imagen").'</h1>
+                        </div>
                             <div>
                                 <h2>'.htmlspecialchars($producto['nombre_producto']).'</h2>
                                 <p>'.htmlspecialchars($producto['precio_producto']).'</p>
@@ -38,7 +42,10 @@
                       if($resultado_producto && mysqli_num_rows($resultado_producto)>0){
                     foreach($productos as $producto ){
                         echo '
-                        <div class="productos">>
+                        <div class="productos">
+                        <div class="imagen">
+                            <h1>'.htmlspecialchars("aqui debe ir la imagen").'</h1>
+                        </div>
                             <div>
                                 <h2>'.htmlspecialchars($producto['nombre_producto']).'</h2>
                                 <p>'.htmlspecialchars($producto['precio_producto']).'</p>
