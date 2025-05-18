@@ -3,6 +3,7 @@ session_start();
 require_once('../conexion.php');
 require_once('./categorias.php');
 require_once('./productos.php');
+require_once('./texto.php');
 $conn = conexionBD();
 $idCategoria=null;
 if(isset($_POST['id_categoria'])){
@@ -23,7 +24,7 @@ if(isset($_POST['id_categoria'])){
     <header>
         <div class="contenedor_logo">
             <a href="index.php">
-                 <img src="" alt="logo">
+                 <img src="./logo.png" alt="logo">
             </a>
              
         </div>
@@ -34,7 +35,7 @@ if(isset($_POST['id_categoria'])){
 
         <div class="contenedor_botones">
             <a href="../login/login_index.php">
-                <button>Iniciar Secion</button>
+                <button>Iniciar Sesion</button>
             </a>
             
             <button>Registro</button> 
@@ -45,6 +46,10 @@ if(isset($_POST['id_categoria'])){
         
        
     </nav>
+
+    <section class="texto-principal">
+        <?php mostra_texto($conn,$idCategoria) ?>
+    </section>
 
      <section class="section_productos">
         
