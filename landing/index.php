@@ -3,7 +3,7 @@ session_start();
 require_once('../conexion.php');
 require_once('./categorias.php');
 require_once('./productos.php');
-$conn = connectBD();
+$conn = conexionBD();
 ?>
 <!DOCTYPE html>
 <html lang="en">
