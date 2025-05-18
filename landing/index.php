@@ -3,9 +3,6 @@ session_start();
 require_once('../conexion.php');
 require_once('./categorias.php');
 require_once('./productos.php');
-<<<<<<< HEADx
-$conn = conexionBD();
-=======
 require_once('./texto.php');
 $conn = conexionBD();
 $idCategoria=null;
@@ -14,7 +11,6 @@ if(isset($_POST['id_categoria'])){
 }
 
 
->>>>>>> 79812f48cb9405f1edf14911b8e13e99361fe2b0
 ?>
 <!DOCTYPE html>
 <html lang="en">
