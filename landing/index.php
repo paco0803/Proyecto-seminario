@@ -3,7 +3,18 @@ session_start();
 require_once('../conexion.php');
 require_once('./categorias.php');
 require_once('./productos.php');
+<<<<<<< HEADx
 $conn = conexionBD();
+=======
+require_once('./texto.php');
+$conn = conexionBD();
+$idCategoria=null;
+if(isset($_POST['id_categoria'])){
+    $idCategoria= $_POST['id_categoria'];
+}
+
+
+>>>>>>> 79812f48cb9405f1edf14911b8e13e99361fe2b0
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -16,7 +27,10 @@ $conn = conexionBD();
 <body>
     <header>
         <div class="contenedor_logo">
-              <img src="" alt="logo">
+            <a href="index.php">
+                 <img src="./logo.png" alt="logo">
+            </a>
+             
         </div>
         <div class="contendor_buscador">
           
@@ -24,7 +38,10 @@ $conn = conexionBD();
         </div>
 
         <div class="contenedor_botones">
-            <button>Iniciar Secion</button>
+            <a href="../login/login_index.php">
+                <button>Iniciar Sesion</button>
+            </a>
+            
             <button>Registro</button> 
         </div>
     </header>
@@ -34,10 +51,19 @@ $conn = conexionBD();
        
     </nav>
 
+    <section class="texto-principal">
+        <?php mostra_texto($conn,$idCategoria) ?>
+    </section>
+
      <section class="section_productos">
-           <?php mostrar_productos($conn) ?>
-            
-            
-        </section>
+        
+           <?php mostrar_productos($conn,$idCategoria) ?>
+     </section>
+
+     <section class="section_boton">
+        <a href="../login/login_index.php">
+            <button>Ver mas</button>
+        </a>
+     </section>
 </body>
 </html>
