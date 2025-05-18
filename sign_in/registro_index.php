@@ -1,22 +1,3 @@
-<?php
-// Iniciar la sesión
-session_start();
-
-// Verificar si las variables de sesión existen
-if (!isset($_SESSION['nombre_usuario']) || !isset($_SESSION['apellido_usuario']) || !isset($_SESSION['tipo_usuario'])) {
-   
-}
-
-$tipo_usuario = $_SESSION['tipo_usuario'];   
-$usuario = $_SESSION['user_usuario'];
-$nombre = $_SESSION['nombre_usuario'];
-$apellido = $_SESSION['apellido_usuario'];
-
-if($tipo_usuario!=1){
-    session_destroy();
-    
-}
-?>
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -105,9 +86,9 @@ if($tipo_usuario!=1){
 </head>
 <body>
     <div class="container">
-        <h2>Registro de Usuario</h2>
-        <form id="registroForm">
-            <div class="form-group" action="insertar_usuario_action.php" method="POST" onsubmit="return validarFormulario()">
+        <h2>Sign in</h2>
+        <form id="registroForm" action="insertar_usuario.php" method="POST" onsubmit="return validarFormulario()">
+            <div class="form-group">
                 <label for="email">Correo Electrónico:</label>
                 <input type="email" id="email_usuario" name="email_usuario" required>
                 <div id="emailError" class="error-message"></div>
@@ -127,15 +108,7 @@ if($tipo_usuario!=1){
                 <input type="text" id="apellido_usuario" name="apellido_usuario" required>
                 <div id="apellidoError" class="error-message"></div>
             </div>
-            <div class="form-group">
-                <label for="tipoUsuario">Tipo de Usuario:</label>
-                <select id="tipo_usuario" name="tipo_usuario">
-                    <option value="cliente">Cliente</option>
-                    <option value="administrador">Administrador</option>
-                    
-                </select>
-            </div>
-            <button type="submit">Registrarse</button>
+            <button type="submit" class="submit_button">Registrarse</button>
         </form>
         <script>
         function validarFormulario() {
@@ -143,7 +116,6 @@ if($tipo_usuario!=1){
             const email = document.getElementById('email_usuario');
             const nombres = document.getElementById('nombre_usuario');
             const apellidos = document.getElementById('apellido_usuario');
-            const tipoUsuario = document.getElementById('tipo_usuario');
             
             // Validar email
             if (!email.value || !email.validity.valid) {
@@ -168,15 +140,6 @@ if($tipo_usuario!=1){
             } else {
                 document.getElementById('apellido_usuario-error').style.display = 'none';
             }
-            
-            // Validar tipo de usuario
-            if (!tipoUsuario.value) {
-                document.getElementById('tipo_usuario-error').style.display = 'block';
-                valido = false;
-            } else {
-                document.getElementById('tipo_usuario-error').style.display = 'none';
-            }
-            
             return valido;
         }
     </script>

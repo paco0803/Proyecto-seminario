@@ -38,7 +38,9 @@ if(isset($_POST['id_categoria'])){
                 <button>Iniciar Sesion</button>
             </a>
             
-            <button>Registro</button> 
+             <a href="../sign_in/registro_index.php">
+                <button>Registrarse</button>
+            </a>
         </div>
     </header>
     <nav>
