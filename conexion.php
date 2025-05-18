@@ -1,18 +1,20 @@
 <?php
-//Función de conexión a base de datos
-function connectDB(){
-    $servername = "localhost";
-    $database = "proyectoseminario";
+function conexionBD(){
+    #Variables de sesion para la base de datos
+    $server = "localhost";
     $username = "root";
     $password = "";
-    // Creando la conexión
-    $conn = mysqli_connect($servername, $username, $password, $database) 
-        or die("Ha sucedido un error inexperado en la conexion de la base de datos");
-    return $conn;
+    $data_base = "proyectoseminario";
+
+    #conexion a base de datos
+    $conexion = mysqli_connect("localhost", "root", "", "proyectoseminario") or die("Error de conexion con la base de datos");
+
+    return $conexion;
 }
-//Función de desconexión a base de datos
-function disconnectDB($conexion){
-    $close = mysqli_close($conexion) 
-        or die("Ha sucedido un error inexperado en la desconexion de la base de datos");
-    return $close;
+
+function disconexionBD($conexion){
+    $desconexion = mysqli_close($conexion) or die("Erro al desconectar de la base de datos");
+    return $desconexion;
 }
+?>
+
