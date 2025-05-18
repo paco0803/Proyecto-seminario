@@ -7,8 +7,7 @@ function conexionBD(){
     $data_base = "proyectoseminario";
 
     #conexion a base de datos
-    $conexion = mysqli_connect($server, $username, $password, $data_base) 
-    or die("Error de conexion con la base de datos");
+    $conexion = mysqli_connect("localhost", "root", "", "proyectoseminario") or die("Error de conexion con la base de datos");
 
     return $conexion;
 }
