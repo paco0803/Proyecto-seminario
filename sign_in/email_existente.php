@@ -2,13 +2,6 @@
 // Iniciar la sesión
 session_start();
 
-$nombre = $_SESSION['nombre_usuario'];
-$apellido = $_SESSION['apellido_usuario'];
-
-// Verificar si las variables de sesión existen
-if (!isset($_SESSION['nombre_usuario']) || !isset($_SESSION['apellido_usuario']) || !isset($_SESSION['tipo_usuario'])) {
-   
-}
 
 $email_nuevo_usuario = $_GET['email_usuario'];  
 
@@ -108,13 +101,12 @@ $email_nuevo_usuario = $_GET['email_usuario'];
 </head>
 <body>
     <div class="container">
-        <p>Bienvenido: <?php echo $nombre ." ". $apellido; ?></p>
         <h1>Usuario ya registrado</h1>
         <h3>El usuario con correo electrónico: <?php echo $email_nuevo_usuario; ?> ya se encuentra registrado en el sistema</h3>
 
-        <p><a href="admin.php">Ir al panel de administración</a></p>
-    
-        <p><a href="cerrar_sesion.php">Cerrar sesión</a></p>
+        <a href="../landing/index.ph">
+                <button>Volver a la pagina principal</button>
+            </a>
     </div>
 
    

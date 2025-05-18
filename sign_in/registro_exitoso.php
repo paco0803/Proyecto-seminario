@@ -1,48 +1,5 @@
 <?php
-// Iniciar la sesión
-session_start();
-
-include ('conexion.php');
-
-$nombre = $_SESSION['nombre_usuario'];
-$apellido = $_SESSION['apellido_usuario'];
-
-// Verificar si las variables de sesión existen
-if (!isset($_SESSION['nombre_usuario']) || !isset($_SESSION['apellido_usuario']) || !isset($_SESSION['tipo_usuario'])) {
-    header("location: index.php");
-}
-
-$email_usuario_registrado = $_GET['email_usuario'];  
-
-$conn = connectDB();
-//Estableciendo caracteres UTF8 para BD, importante para acentos y eñes en MySQL                            
-mysqli_set_charset($conn, "utf8");
-
-// Check connection
-if (!$conn) {
-    die("Connection failed: " . mysqli_connect_error());
-}
-
-$consulta = mysqli_query($conn, "SELECT * FROM usuarios WHERE email_usuario = '$email_usuario_registrado' ORDER BY Id DESC LIMIT 1 ");
-
-if($consulta){
-
-    //Ahora valida que la consuta haya traido registros
-    if( mysqli_num_rows( $consulta ) > 0){
-  
-      //Mientras mysqli_fetch_array traiga algo, lo agregamos a una variable temporal
-      while($fila = mysqli_fetch_array( $consulta ) ){
-        $nombres_usuario = $fila['nombres_usuario'];
-        $apellidos_usuario = $fila['apellidos_usuario'];
-        
-      }
-  
-    }
-    //Liberando la memoria de la consulta
-    mysqli_free_result($consulta);
-
-}
-
+$email_nuevo_usuario = $_GET['email'];  
 ?>
 
 <!DOCTYPE html>
@@ -139,15 +96,12 @@ if($consulta){
 </head>
 <body>
     <div class="container">
-        <p>Bienvenido: <?php echo $nombre ." ". $apellido; ?></p>
-        <h1>Usuario registrado exitosamente</h1>
-        <h3>El usuario con correo electrónico: <?php echo $email_usuario_registrado; ?> ha sido registrado en el sistema</h3>
-        <h4>Nombres: <?php echo $nombres_usuario; ?></h4>
-        <h4>Apellidos: <?php echo $apellidos_usuario; ?></h4>
+        <h1>Registro exitoso</h1>
+        <h3>El usuario con correo electrónico: <?php echo $email_nuevo_usuario; ?> se registro exitosamente</h3>
 
-        <p><a href="admin.php">Ir al panel de administración</a></p>
-    
-        <p><a href="cerrar_sesion.php">Cerrar sesión</a></p>
+         <a href="../landing/index.ph">
+                <button>Volver a la pagina principal</button>
+            </a>
     </div>
 
    
