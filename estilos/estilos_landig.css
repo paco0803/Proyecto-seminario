@@ -85,6 +85,7 @@ nav button:hover {
   border-radius: 10px;
   width: calc(30% - 1rem); /* 50% menos la mitad del gap */
   padding: 2.5rem;
+  cursor: pointer;
 }
 
 .productos .imagen {

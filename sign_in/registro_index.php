@@ -85,6 +85,9 @@
     </style>
 </head>
 <body>
+    </div>
+    <a href="../landing/index.php" class="back-arrow" title="Volver a la página principal">Volver a la página principal</a>
+    </div>
     <div class="container">
         <h2>Sign in</h2>
         <form id="registroForm" action="insertar_usuario.php" method="POST" onsubmit="return validarFormulario()">

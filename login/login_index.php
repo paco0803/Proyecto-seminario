@@ -14,16 +14,13 @@
             color: #4a90e2;
             transition: color 0.2s;
         }
-        .back-arrow:hover {
-            color: #357ab8;
-        }
     </style>
 </head>
 <body>
     <div class="pantalla_verde">
     
     </div>
-    <a href="../landing/index.php" class="back-arrow" title="Volver a la página principal">&#8592; Volver a la página principal</a>
+    <a href="../landing/index.php" class="back-arrow" title="Volver a la página principal">Volver a la página principal</a>
     <div>
         <form id="login_form" action="login.php" method="POST">
             <h2 style="text-align:center; margin-bottom: 24px; ">Login</h2>
