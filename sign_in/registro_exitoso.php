@@ -99,7 +99,7 @@ $email_nuevo_usuario = $_GET['email'];
         <h1>Registro exitoso</h1>
         <h3>El usuario con correo electrónico: <?php echo $email_nuevo_usuario; ?> se registro exitosamente</h3>
 
-         <a href="../landing/index.ph">
+         <a href="../landing/index.php">
                 <button>Volver a la pagina principal</button>
             </a>
     </div>
