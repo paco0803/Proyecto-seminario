@@ -101,6 +101,7 @@ $email_nuevo_usuario = $_GET['email_usuario'];
 </head>
 <body>
     <div class="container">
+        
         <h1>Usuario ya registrado</h1>
         <h3>El usuario con correo electrónico: <?php echo $email_nuevo_usuario; ?> ya se encuentra registrado en el sistema</h3>
 

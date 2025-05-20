@@ -13,6 +13,7 @@
             width: 320px;
             border-radius: 8px;
             box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+           margin-top: 20vh;
         }
         label {
             display: block;
@@ -49,4 +50,19 @@
             box-sizing: border-box; /* Incluye el padding dentro del height */
         }           
    
-        
+         .volver {
+            display: inline-block;
+            font-size: 24px;
+            transition: color 0.2s;
+            padding-bottom: 15rem;
+            padding: 1rem;
+        }
+       .volver i{
+        color: rgb(0, 0, 0);
+        font-size: 2rem;
+       }
+       .volver i:hover{
+        transition: 0.5s;
+        transform: scale(1.3);
+       }
+       

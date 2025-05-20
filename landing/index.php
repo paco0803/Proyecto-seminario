@@ -4,12 +4,18 @@ require_once('../conexion.php');
 require_once('./categorias.php');
 require_once('./productos.php');
 require_once('./texto.php');
+require_once('./busqueda.php');
 $conn = conexionBD();
 $idCategoria=null;
 if(isset($_POST['id_categoria'])){
     $idCategoria= $_POST['id_categoria'];
 }
 
+$nombreProducto=null;
+if(isset($_POST['nombre_producto'])){
+    $nombreProducto=$_POST['nombre_producto'];
+}
+ // echo '<h1>'.htmlspecialchars($nombreProducto).'</h1>';
 
 ?>
 <!DOCTYPE html>
@@ -19,6 +25,7 @@ if(isset($_POST['id_categoria'])){
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <link rel="stylesheet" href="../estilos/estilos_landig.css">
+    
 </head>
 <body>
     <header>
@@ -29,8 +36,10 @@ if(isset($_POST['id_categoria'])){
              
         </div>
         <div class="contendor_buscador">
-          
-                <input type="text" placeholder="Buscar">
+          <?php 
+            busqueda();
+          ?>
+               
         </div>
 
         <div class="contenedor_botones">
@@ -55,13 +64,14 @@ if(isset($_POST['id_categoria'])){
 
      <section class="section_productos">
         
-           <?php mostrar_productos($conn,$idCategoria) ?>
+           <?php mostrar_productos($conn,$idCategoria,$nombreProducto) ?>
      </section>
 
      <section class="section_boton">
         <a href="../login/login_index.php">
             <button>Ver mas</button>
         </a>
+        
      </section>
 </body>
 </html>
