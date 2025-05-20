@@ -1,6 +1,8 @@
 <?php
 
 function mostra_texto($conn, $idCategoria=null){
+
+        
         if(!$conn){
                   die("Connection failed: ". mysqli_connect_error()); 
             }

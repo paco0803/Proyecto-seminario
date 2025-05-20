@@ -20,11 +20,20 @@ header {
   display: flex;
   justify-content: center;
 }
-.contendor_buscador input {
+.buscador{
+     flex: 2;
+  display: flex;
+  justify-content: center;
+}
+ .buscador input {
   width: 80%;
   max-width: 500px;
-  padding: 0.5rem;
+  padding: 0.8rem;
+  font-size: 1.1rem;
+  border-radius: 5px;
+  border: 1px solid #000000 ;
 }
+
 .contenedor_botones {
   flex: 1;
   display: flex;
@@ -37,7 +46,7 @@ header {
   font-size: 0.9rem;
   padding: 2rem 2rem;
   border: none;
-  background-color: white;
+  background-color: rgb(255, 255, 255);
   cursor: pointer;
   border-left: 2px solid black;
 }
@@ -85,6 +94,7 @@ nav button:hover {
   border-radius: 10px;
   width: calc(30% - 1rem); /* 50% menos la mitad del gap */
   padding: 2.5rem;
+  cursor: pointer;
 }
 
 .productos .imagen {
