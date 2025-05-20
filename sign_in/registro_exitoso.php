@@ -8,6 +8,8 @@ $email_nuevo_usuario = $_GET['email'];
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Registro de Usuarios</title>
+    <link rel="stylesheet" href="../estilos/estilos_login.css">
+
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -100,7 +102,7 @@ $email_nuevo_usuario = $_GET['email'];
         <h3>El usuario con correo electrónico: <?php echo $email_nuevo_usuario; ?> se registro exitosamente</h3>
 
          <a href="../landing/index.php">
-                <button>Volver a la pagina principal</button>
+                <button class="submit_button">Volver a la pagina principal</button>
             </a>
     </div>
 
