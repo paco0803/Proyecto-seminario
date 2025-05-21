@@ -1,0 +1,124 @@
+ body {
+    font-family: sans-serif;
+    margin: 0;
+    padding: 0;
+    min-height: 100vh;
+}
+
+.main-container {
+    display: flex;
+    min-height: 100vh;
+}
+
+.white-section {
+    flex: 1;
+    background-color: #ffffff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.container {
+    background-color: #fff;
+    padding: 30px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    width: 400px;
+}
+
+.pantalla_verde {
+    background-color: #c5ff50;
+    width: 30%; /* Ajusta este valor según lo ancho que quieras la sección verde */
+    min-height: 100vh;
+}
+
+/* Mantén aquí el resto de tus estilos actuales para el formulario */
+h2 {
+    text-align: center;
+    margin-bottom: 20px;
+    color: #333;
+}
+
+.form-group {
+    margin-bottom: 15px;
+}
+
+label {
+    display: block;
+    margin-bottom: 5px;
+    color: #555;
+    font-size: 0.9em;
+}
+
+input[type="email"],
+input[type="password"],
+input[type="text"],
+select {
+    width: calc(100% - 12px);
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    box-sizing: border-box;
+    font-size: 1em;
+}
+
+
+        select {
+            appearance: none;
+            background-color: #fff;
+            background-image: url('data:image/svg+xml;utf8,<svg fill="currentColor" viewBox="0 0 24 24"><path d="M7 10l5 5 5-5z"/></svg>');
+            background-repeat: no-repeat;
+            background-position-x: 100%;
+            background-position-y: 5px;
+            padding-right: 30px;
+        }
+
+        button {
+            width: 100%;
+            padding: 10px;
+            color: #c5ff50;
+            background-color: black;
+            border:2px solid black;
+            border: none;
+            border-radius: 4px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            transition: 0.5s;
+            background-color: #c5ff50;
+            color: black;
+        }
+
+        .error-message {
+            color: red;
+            font-size: 0.8em;
+            margin-top: 5px;
+        }
+          .pantalla_verde {
+            background-color: #c5ff50;
+            padding: 15%; /* Este padding podría causar scroll si el contenido interno es grande */
+            height: 100vh; /* Ocupa el 100% del alto de la ventana */
+            box-sizing: border-box; /* Incluye el padding dentro del height */
+         
+             
+        }  
+          .volver {
+            display: inline-block;
+            font-size: 24px;
+            transition: color 0.2s;
+            padding-bottom: 15rem;
+            padding: 1rem;
+           
+            justify-content: right;
+        }
+       .volver i{
+        color: rgb(0, 0, 0);
+        font-size: 2rem;
+       }
+       .volver i:hover{
+        transition: 0.5s;
+        transform: scale(1.3);
+       }
+       
