@@ -1,13 +1,6 @@
     <?php
-<<<<<<< HEAD
-    function mostrar_productos($conn, $idCategoria = null){
-=======
   
-    
-   
-
-    function mostrar_productos($conn, $idCategoria = null, $nombreProducto=null){
->>>>>>> 512f4700a00789609126cf66a7fae57dd4ff4424
+    function mostrar_productos($conn, $idCategoria = null, $nombreProducto=null) {
 
     
     if(!$conn){

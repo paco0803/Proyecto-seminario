@@ -9,15 +9,6 @@
 
 </head>
 <body>
-<<<<<<< HEAD
-    </div>
-    <a href="../landing/index.php" class="back-arrow" title="Volver a la página principal">Volver a la página principal</a>
-    </div>
-    <div class="container">
-        <h2>Sign in</h2>
-        <form id="registroForm" action="insertar_usuario.php" method="POST" onsubmit="return validarFormulario()">
-            <div class="form-group">
-=======
     
     <div class="main-container">
         <div class="volver">
@@ -32,7 +23,6 @@
                 <h2>Sign in</h2>
                 <form id="registroForm" action="insertar_usuario.php" method="POST" onsubmit="return validarFormulario()">
                    <div class="form-group">
->>>>>>> 512f4700a00789609126cf66a7fae57dd4ff4424
                 <label for="email">Correo Electrónico:</label>
                 <input type="email" id="email_usuario" name="email_usuario" required>
                 <div id="emailError" class="error-message"></div>
