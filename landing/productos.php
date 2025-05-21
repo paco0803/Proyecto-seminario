@@ -1,8 +1,4 @@
     <?php
-  
-    
-   
-
     function mostrar_productos($conn, $idCategoria = null){
 
     

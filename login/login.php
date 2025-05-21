@@ -34,11 +34,11 @@ if(mysqli_num_rows($query)>0){ #Verificacion de existencia del usuario con las c
     #Determinar si el usuario que inicio sesion es un administrador o un cliente
     switch($_SESSION['tipo']){
         case 1:
-            header("location: ../admin.php");
+            header("location: ../admin/admin.php");
             break;
 
         case 2:
-            header("location: ../cliente.php");
+            header("location: ../cliente/cliente.php");
             break;
     }
      mysqli_close($$conexion);
