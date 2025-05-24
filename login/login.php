@@ -41,7 +41,7 @@ if(mysqli_num_rows($query)>0){ #Verificacion de existencia del usuario con las c
             header("location: ../cliente/cliente.php");
             break;
     }
-     mysqli_close($$conexion);
+     mysqli_close($conexion);
     exit;
 }else{
     header("location: acceso_denegado.php");
