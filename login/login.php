@@ -2,7 +2,7 @@
 session_start();
 
 include("../conexion.php"); #Importacion del fichero conexion
-
+require_once("../modal.php");//para utlilizar el modal en caso de requerirlo
 #Variables recibidas por metodo post del login_index
 $email = $_POST['email'];
 $password = $_POST['password'];
@@ -38,7 +38,7 @@ if(mysqli_num_rows($query)>0){ #Verificacion de existencia del usuario con las c
             break;
 
         case 2:
-            header("location: ../cliente/cliente.php");
+            header("location: ../landing/index.php");
             break;
     }
      mysqli_close($conexion);

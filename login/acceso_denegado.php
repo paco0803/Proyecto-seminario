@@ -7,6 +7,8 @@
     <title>Error de acceso</title>
 </head>
 <body>
+
+
     <h1>Error de acceso al sistema</h1>
     
     <p>Se ha producido un error de acceso, verifique su nombre de usuario y contraseña</p>
