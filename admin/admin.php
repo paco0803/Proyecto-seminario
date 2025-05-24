@@ -1,6 +1,7 @@
 <?php
 require_once('validar_admin.php');
-$validar = validar_admin();
+
+validar_admin();
 ?>
 
 <!DOCTYPE html>
