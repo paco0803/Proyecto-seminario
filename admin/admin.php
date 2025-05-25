@@ -222,7 +222,7 @@ $cantidad_usuarios = $array_contar['contar'];
             <div class="bienvenida">
                 <?php echo htmlspecialchars('Administrador: '.$_SESSION['nombre'] ." ". $_SESSION['apellido']); ?>
             </div>
-            <a href="insertar_usuario.php" class="action-btn">Insertar nuevo usuario</a>
+            <a href="crear_usuario.php" class="action-btn">Insertar nuevo usuario</a>
             <a href="../cerrar_sesion.php" class="action-btn cerrar-sesion">Cerrar sesión</a>
         </div>
         <div class="content">

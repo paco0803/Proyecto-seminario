@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Registro de Usuario</title>
+    <title>Insertar Nuevo Usuario</title>
     <link rel="stylesheet" href="../estilos/estilos_signin.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 
@@ -12,7 +12,7 @@
     
     <div class="main-container">
         <div class="volver">
-    <a href="../landing/index.php"  title="Volver a la página principal">
+    <a href="admin.php"  title="Volver a la página principal">
         <i class="fa-solid fa-arrow-left" ></i>
     </a>
      </div>
@@ -20,8 +20,8 @@
             
 
             <div class="container">
-                <h2>Sign in</h2>
-                <form id="registroForm" action="insertar_usuario.php" method="POST" onsubmit="return validarFormulario()">
+                <h2>Insertat Nuevo usuario</h2>
+                <form id="registroForm" action="../sign_in/insertar_usuario.php" method="POST" onsubmit="return validarFormulario()">
                    <div class="form-group">
                 <label for="email">Correo Electrónico:</label>
                 <input type="email" id="email_usuario" name="email_usuario" required>
@@ -41,6 +41,13 @@
                 <label for="apellido">Apellido:</label>
                 <input type="text" id="apellido_usuario" name="apellido_usuario" required>
                 <div id="apellidoError" class="error-message"></div>
+            </div>
+            <div class="form-group">
+                <label for="tipo_usuario">Rol</label>
+                <select id="tipo_usuario" name="tipo_usuario" required>
+                    <option value="1">Administrador</option>
+                    <option value="2">Cliente</option>
+                </select>
             </div>
             <button type="submit" class="submit_button">Registrarse</button>
                 </form>
