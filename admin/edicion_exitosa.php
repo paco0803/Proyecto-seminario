@@ -2,7 +2,7 @@
 session_start();
 require_once('validar_admin.php');
 validar_admin();
-$email = $_GET['email'];
+$email = $_GET['email']
 ?>
 
 <!DOCTYPE html>
@@ -101,7 +101,7 @@ $email = $_GET['email'];
 </head>
 <body>
     <div class="container">
-        <h1>Registro exitoso</h1>
+        <h1>Edicion exitosa</h1>
         <h3>El usuario con correo electrónico: <?php echo $email; ?> se registro exitosamente</h3>
          <a href="admin.php">
                 <button class="submit_button">Volver al panel administrativo    </button>
