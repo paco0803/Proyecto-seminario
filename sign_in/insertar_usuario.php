@@ -1,10 +1,17 @@
 <?php
 include('../conexion.php');
+session_start();
 
 $email_nuevo_usuario = $_POST['email_usuario'];
 $password_nuevo_usuario = $_POST['password_usuario'];
 $nombres_nuevo_usuario = $_POST['nombre_usuario'];
 $apellidos_nuevo_usuario = $_POST['apellido_usuario'];
+if(isset($_POST['tipo_usuario'])){
+     $tipo_nuevo_usuario = $_POST['tipo_usuario'];
+}else{
+   $tipo_nuevo_usuario = 2;
+}
+echo  $tipo_nuevo_usuario;
 $password_encriptado_nuevo_usuario = md5($password_nuevo_usuario);
 
 $conn = conexionBD();
@@ -31,11 +38,15 @@ if ($numResults != 0) {
     exit(); 
     }
 
-$sql = "INSERT INTO usuarios (correo_usuario, clave_usuario, nombre_usuario, apellido_usuario) 
-VALUES ('$email_nuevo_usuario', '$password_encriptado_nuevo_usuario', '$nombres_nuevo_usuario', '$apellidos_nuevo_usuario')";
+$sql = "INSERT INTO usuarios (correo_usuario, clave_usuario, nombre_usuario, apellido_usuario, tipo_usuario) 
+VALUES ('$email_nuevo_usuario', '$password_encriptado_nuevo_usuario', '$nombres_nuevo_usuario', '$apellidos_nuevo_usuario', '$tipo_nuevo_usuario')";
 
 if (mysqli_query($conn, $sql)) {
-    header("location: registro_exitoso.php?email=$email_nuevo_usuario");
+    if($_SESSION['tipo'] = 1){
+        header("location: ../admin/creacion_exitosa.php?email=$email_nuevo_usuario");
+    }else{
+        header("location: registro_exitoso.php?email=$email_nuevo_usuario");  
+    }
 } else {
     echo "Error: " . $sql . "<br>" . mysqli_error($conn);
 }
