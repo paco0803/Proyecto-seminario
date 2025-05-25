@@ -262,8 +262,12 @@ $cantidad_usuarios = $array_contar['contar'];
                         ?>
                     </td>
                     <td>
-                        <form class="action-form" action="editar_usuario" method="POST">
+                        <form class="action-form" action="editar_usuario.php" method="POST">
                             <input type="hidden" name="email" value="<?php echo htmlspecialchars($fila['correo_usuario']); ?>">
+                            <input type="hidden" name="nombre" value="<?php echo htmlspecialchars($fila['nombre_usuario']); ?>">
+                            <input type="hidden" name="apellido" value="<?php echo htmlspecialchars($fila['apellido_usuario']); ?>">
+                            <input type="hidden" name="clave" value="<?php echo htmlspecialchars($fila['clave_usuario']); ?>">
+                            <input type="hidden" name="tipo" value="<?php echo htmlspecialchars($fila['tipo_usuario']); ?>">
                             <button type="submit" class="action-btn-table edit-btn">Editar</button>
                         </form>
                     </td>

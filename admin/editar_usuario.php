@@ -2,6 +2,12 @@
 session_start();
 require_once('validar_admin.php');
 validar_admin();
+
+$email = $_POST['email'];
+$nombre = $_POST['nombre'];
+$apellido = $_POST['apellido'];
+$clave = $_POST['clave'];
+$tipo = $_POST['tipo'];
 ?>
 
 <!DOCTYPE html>
@@ -9,7 +15,7 @@ validar_admin();
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Insertar Nuevo Usuario</title>
+    <title>Editar Usuario</title>
     <link rel="stylesheet" href="../estilos/estilos_signin.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 
@@ -26,36 +32,45 @@ validar_admin();
             
 
             <div class="container">
-                <h2>Insertat Nuevo usuario</h2>
-                <form id="registroForm" action="../sign_in/insertar_usuario.php" method="POST" onsubmit="return validarFormulario()">
+                <h2>Editar el usuario <?php $email ?></h2>
+                <form id="registroForm" action="editar.php" method="POST" onsubmit="return validarFormulario()">
                    <div class="form-group">
                 <label for="email">Correo Electrónico:</label>
-                <input type="email" id="email_usuario" name="email_usuario" required>
+                <input type="email" id="email_usuario" name="email_usuario" value="<?php echo $email ?>" readonly>
                 <div id="emailError" class="error-message"></div>
             </div>
             <div class="form-group">
-                <label for="password">Contraseña:</label>
-                <input type="password" id="password_usuario" name="password_usuario" required>
-                <div id="passwordError" class="error-message"></div>
+                <label for="nombre">Nombre:</label>
+                <input type="text" id="nombre_usuario" name="nombre_usuario" value="<?php echo $nombre ?>" required>
+                <div id="nombreError" class="error-message"></div>
             </div>
             <div class="form-group">
-                <label for="nombre">Nombre:</label>
-                <input type="text" id="nombre_usuario" name="nombre_usuario" required>
+                <label for="clave_usuario">Clave:</label>
+                <input type="text" id="clave_usuario" name="clave_usuario" value="">
                 <div id="nombreError" class="error-message"></div>
             </div>
             <div class="form-group">
                 <label for="apellido">Apellido:</label>
-                <input type="text" id="apellido_usuario" name="apellido_usuario" required>
+                <input type="text" id="apellido_usuario" name="apellido_usuario" value="<?php echo $apellido ?>" required>
                 <div id="apellidoError" class="error-message"></div>
             </div>
             <div class="form-group">
                 <label for="tipo_usuario">Rol</label>
                 <select id="tipo_usuario" name="tipo_usuario" required>
-                    <option value="1">Administrador</option>
-                    <option value="2">Cliente</option>
+                    <?php 
+                    if($tipo == 1) echo '
+                            <option value="1">Administrador</option>
+                            <option value="2">Cliente</option>';
+                    ?>
+                    <?php
+                    if($tipo == 2) echo '
+                            <option value="2">Cliente</option>
+                            <option value="1">Administrador</option>';
+                            
+                    ?>
                 </select>
             </div>
-            <button type="submit" class="submit_button">Registrarse</button>
+            <button type="submit" class="submit_button">Editar</button>
                 </form>
             </div>
         </div>
