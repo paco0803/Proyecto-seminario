@@ -22,8 +22,14 @@ if (isset($_POST['btnAccion'])) {
                  'PRECIO'=>$resultado_carrito_producto['precio_producto'] 
                 );
                 $_SESSION['CARRITO'][0]=$producto_array;
+                $mensaje="Producto Agregado al carrito";
 
             }else{
+
+                $id_productos_carrito=array_column($_SESSION['CARRITO']);
+                if(in_array($id,$id_productos_carrito)){
+                    echo "<script>alert('el producto ya ha sido seleccionado..');</script>";
+                }else{
                 $numero_productos=count($_SESSION['CARRITO']);
                  $producto_array=array(
                  'ID'=>$resultado_carrito_producto['id_producto'],
@@ -32,7 +38,9 @@ if (isset($_POST['btnAccion'])) {
                  'PRECIO'=>$resultado_carrito_producto['precio_producto'] 
                 );
                  $_SESSION['CARRITO'][$numero_productos]=$producto_array;
+                  $mensaje="Producto Agregado al carrito";
             }
+            } 
             break;
             case "ELiminar":
                 if (is_numeric($_POST['id_producto'])) {
