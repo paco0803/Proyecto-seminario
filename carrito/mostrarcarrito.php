@@ -14,7 +14,7 @@ require_once('../landing/texto.php');
       <th width="15%" class="text-center">Cantidad</th>
       <th width="20%" class="text-center">Precio</th>
       <th width="20%" class="text-center">Total</th>
-      <th width="5%">--</th>
+      <th width="20%">--</th>
     </tr>
     <?php $total=0; ?>
     <?php foreach ($SESSION['CARRITO'] as $indice=>$producto_array) {?>

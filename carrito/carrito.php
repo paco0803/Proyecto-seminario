@@ -40,7 +40,8 @@ if (isset($_POST['btnAccion'])) {
                  $_SESSION['CARRITO'][$numero_productos]=$producto_array;
                   $mensaje="Producto Agregado al carrito";
             }
-            } 
+            }
+            
             break;
             case "ELiminar":
                 if (is_numeric($_POST['id_producto'])) {
