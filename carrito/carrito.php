@@ -34,6 +34,19 @@ if (isset($_POST['btnAccion'])) {
                  $_SESSION['CARRITO'][$numero_productos]=$producto_array;
             }
             break;
+            case "ELiminar":
+                if (is_numeric($_POST['id_producto'])) {
+                    $id=$_POST['id_producto'];
+                    foreach($_SESSION['CARRITO'] as $indice=>$producto_array){
+                        if ($producto_array['ID']==$id) {
+                           unset($_SESSION['CARRITO'][$indice]);
+                           echo "elemento borrado";
+                        }
+
+                    }
+                }
+                break;
+
         
         default:
             $mensaje="Ups... Producto no agregado correctamente";

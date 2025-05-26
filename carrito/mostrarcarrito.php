@@ -23,6 +23,16 @@ require_once('../landing/texto.php');
       <td width="15%" class="text-center"><?php echo $producto_array['CANTIDAD']?></td>
       <td width="20%" class="text-center"><?php echo $producto_array['PRECIO']?></td>
       <td width="20%" class="text-center"><?php echo number_format($producto_array['PRECIO']*$producto_array['CANTIDAD'],2)?></td>
+
+      <form action="" method="POST">
+        <input type="hidden" name="id_producto" id="id_producto" value="<?php echo $producto_array['ID'] ?>">
+        <button
+        type="Submit"
+        name="btnAccion"
+        value="Eliminar"
+        >Eliminar</button>
+      </form>
+
       <td width="5%"><button class="btn btn-danger" type="button">Eliminar</button></td>
     </tr>
     <?php $total=$total+($producto_array['PRECIO']*$producto_array['CANTIDAD']);?>
