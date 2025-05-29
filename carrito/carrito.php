@@ -2,15 +2,15 @@
 session_start();
 $mensaje="";
 $sql_productos="SELECT nombre_producto, precio_producto, id_producto FROM productos";
-$conn=conexionBD();
-$confir="cargado corectamente";
+
+
  $resultado_carrito_producto= mysqli_query($conn, $sql_productos);
 if (isset($_POST['btnAccion'])) {
     
     switch ($_POST['btnAccion']) {
         case 'Agregar':
             if (is_numeric($_POST['id_producto'])||is_numeric($_POST['id_usuario'])) {
-                $mensaje= $resultado_carrito_producto && $confir ;
+                $mensaje= $resultado_carrito_producto."Cargado corectamente" ;
             }else{
                 $menjaje="ID INCORRECTO";
             }
