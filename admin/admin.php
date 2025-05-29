@@ -257,7 +257,7 @@ $cantidad_usuarios = $array_contar['contar'];
                         if($fila['tipo_usuario'] == 1){
                             echo '<span class="user-type admin">Administrador</span>';
                         }else{
-                            echo '<span class="user-type cliente">Usuario</span>';
+                            echo '<span class="user-type cliente">Cliente</span>';
                         }
                         ?>
                     </td>
