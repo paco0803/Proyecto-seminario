@@ -11,19 +11,19 @@ if (!$conexion) {
     die("Connection failed: " . mysqli_connect_error());
 }
 
-#Consulta para traer usuarios
-$query = "SELECT * from usuarios";
-$usuarios= mysqli_query($conexion, $query);
-$query_contar = "SELECT COUNT(*) as contar from usuarios";
+$query = "SELECT * from productos INNER JOIN categorias on productos.id_categoria = categorias.id_categoria";
+$productos= mysqli_query($conexion, $query);
+$query_contar = "SELECT COUNT(*) as contar from productos";
 $consulta_contar = mysqli_query($conexion,$query_contar);
 $array_contar = mysqli_fetch_array($consulta_contar);
-$cantidad_usuarios = $array_contar['contar'];
+$cantidad_productos = $array_contar['contar'];
 ?>
+
 <!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <title>Panel de administrador</title>
+    <title>Productos</title>
     <style>
         body {
             background: #f4f6f8;
@@ -97,7 +97,7 @@ $cantidad_usuarios = $array_contar['contar'];
             flex: 1;
             padding: 36px 32px 28px 32px;
         }
-        .usuarios-card {
+        .productos-card {
             display: flex;
             align-items: center;
             justify-content: center;
@@ -111,23 +111,23 @@ $cantidad_usuarios = $array_contar['contar'];
             margin-left: auto;
             margin-right: auto;
         }
-        .icono-usuario {
+        .icono-producto {
             display: flex;
             align-items: center;
             justify-content: center;
         }
-        .usuarios-info {
+        .productos-info {
             display: flex;
             flex-direction: column;
             align-items: flex-start;
         }
-        .usuarios-numero {
+        .productos-numero {
             font-size: 2.6rem;
             font-weight: bold;
             color: #357ab8;
             line-height: 1;
         }
-        .usuarios-label {
+        .productos-label {
             font-size: 1.1rem;
             color: #2d3e50;
             margin-top: 2px;
@@ -158,23 +158,20 @@ $cantidad_usuarios = $array_contar['contar'];
         tr:hover {
             background: #e6f0fa;
         }
-        .user-type {
-            display: inline-block;
-            padding: 4px 8px;
-            border-radius: 12px;
-            font-size: 12px;
-            font-weight: 600;
-        }
-        .admin{
-            background-color: #2d3e50;
-            color: white;
-        }
-        .cliente{
-            background-color: #357ab8;
-            color: white;
-        }
         .action-form {
             display: inline;
+        }
+        .categoria-badge {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 16px;
+            background: #4a90e2;
+            color: white;
+            font-weight: 600;
+            font-size: 0.98rem;
+            box-shadow: 0 1px 3px rgba(33,118,174,0.07);
+            border: 1px solidrgb(245, 245, 245);
+            letter-spacing: 0.5px;
         }
         .action-btn-table {
             padding: 6px 16px;
@@ -218,69 +215,65 @@ $cantidad_usuarios = $array_contar['contar'];
 <body>
     <div class="main-layout">
         <div class="sidebar">
-            <h2>Administración</h2>
+            <h2>Productos</h2>
             <div class="bienvenida">
                 <?php echo htmlspecialchars('Administrador: '.$_SESSION['nombre'] ." ". $_SESSION['apellido']); ?>
             </div>
-            <a href="crear_usuario.php" class="action-btn">Insertar nuevo usuario</a>
-            <a href="productos_admin.php" class="action-btn">Productos</a>
+            <a href="crear_producto.php" class="action-btn">Insertar nuevo producto</a>
+            <a href="admin.php" class="action-btn">Usuarios</a>
             <a href="../cerrar_sesion.php" class="action-btn cerrar-sesion">Cerrar sesión</a>
         </div>
         <div class="content">
-            <div class="usuarios-card">
-                <div class="icono-usuario">
+            <div class="productos-card">
+                <div class="icono-producto">
                     <svg width="36" height="36" fill="#4a90e2" viewBox="0 0 24 24">
-                        <path d="M12 12c2.967 0 8 1.484 8 4.444V20H4v-3.556C4 13.484 9.033 12 12 12zm0-2c-2.21 0-4-1.79-4-4s1.79-4 4-4 4 1.79 4 4-1.79 4-4 4z"/>
+                        <path d="M21 7.16V6a2 2 0 0 0-1.11-1.79l-7-3.11a2 2 0 0 0-1.78 0l-7 3.11A2 2 0 0 0 3 6v1.16A2 2 0 0 0 2 9v9a2 2 0 0 0 1.11 1.79l7 3.11a2 2 0 0 0 1.78 0l7-3.11A2 2 0 0 0 22 18V9a2 2 0 0 0-1-1.84zM12 3.19l7 3.11-7 3.11-7-3.11zm8 14.81a1 1 0 0 1-.56.89l-7 3.11a1 1 0 0 1-.88 0l-7-3.11A1 1 0 0 1 4 18V9.51l7 3.11 7-3.11V18z"/>
                     </svg>
                 </div>
-                <div class="usuarios-info">
-                    <span class="usuarios-numero"><?php echo $cantidad_usuarios; ?></span>
-                    <span class="usuarios-label">Usuarios registrados</span>
+                <div class="productos-info">
+                    <span class="productos-numero"><?php echo $cantidad_productos; ?></span>
+                    <span class="productos-label">Productos registrados</span>
                 </div>
             </div>
-            <h1>Lista de Usuarios</h1>
+            <h1>Lista de Productos</h1>
             <table>
                 <tr>
-                    <th>Correo</th>
                     <th>Nombre</th>
-                    <th>Apellido</th>
-                    <th>Rol</th>
+                    <th>Cantidad</th>
+                    <th>Descripcion</th>
+                    <th>Categoria</th>
                     <th>Editar</th>
                     <th>Eliminar</th>
                 </tr>
-                <?php while($fila = mysqli_fetch_assoc($usuarios)): ?>
+                <?php while($fila = mysqli_fetch_assoc($productos)): ?>
                 <tr>
-                    <td><?php echo htmlspecialchars($fila['correo_usuario']); ?></td>
-                    <td><?php echo htmlspecialchars($fila['nombre_usuario']); ?></td>
-                    <td><?php echo htmlspecialchars($fila['apellido_usuario']); ?></td>
+                    <td><?php echo htmlspecialchars($fila['nombre_producto']); ?></td>
+                    <td><?php echo htmlspecialchars($fila['cantidad_producto']); ?></td>
+                    <td><?php echo htmlspecialchars($fila['descripcion_producto']); ?></td>
                     <td>
-                        <?php   
-                        if($fila['tipo_usuario'] == 1){
-                            echo '<span class="user-type admin">Administrador</span>';
-                        }else{
-                            echo '<span class="user-type cliente">Cliente</span>';
-                        }
-                        ?>
+                        <span class="categoria-badge">
+                            <?php echo htmlspecialchars($fila['nombre_categoria']); ?>
+                        </span>
                     </td>
                     <td>
-                        <form class="action-form" action="editar_usuario.php" method="POST">
-                            <input type="hidden" name="email" value="<?php echo htmlspecialchars($fila['correo_usuario']); ?>">
-                            <input type="hidden" name="nombre" value="<?php echo htmlspecialchars($fila['nombre_usuario']); ?>">
-                            <input type="hidden" name="apellido" value="<?php echo htmlspecialchars($fila['apellido_usuario']); ?>">
-                            <input type="hidden" name="clave" value="<?php echo htmlspecialchars($fila['clave_usuario']); ?>">
-                            <input type="hidden" name="tipo" value="<?php echo htmlspecialchars($fila['tipo_usuario']); ?>">
+                        <form class="action-form" action="editar_producto.php" method="POST">
+                            <input type="hidden" name="id" value="<?php echo htmlspecialchars($fila['id_producto']); ?>">
+                            <input type="hidden" name="nombre" value="<?php echo htmlspecialchars($fila['nombre_producto']); ?>">
+                            <input type="hidden" name="cantidad" value="<?php echo htmlspecialchars($fila['cantidad_producto']); ?>">
+                            <input type="hidden" name="descripcion" value="<?php echo htmlspecialchars($fila['descripcion_producto']); ?>">
+                            <input type="hidden" name="categoria" value="<?php echo htmlspecialchars($fila['nombre_categoria']); ?>">
                             <button type="submit" class="action-btn-table edit-btn">Editar</button>
                         </form>
                     </td>
                     <td>
-                        <?php $modalId = 'eliminar_' . md5($fila['correo_usuario']); ?>
+                        <?php $modalId = 'eliminar_' . md5($fila['id_producto']); ?>
                         <button onclick="document.getElementById('<?php echo $modalId; ?>').showModal()" class="action-btn-table delete-btn">Eliminar</button>
                         <dialog id="<?php echo $modalId; ?>">
-                            <h2>Eliminación de usuario</h2>
-                            <p>¿Está seguro de eliminar al usuario <?php echo htmlspecialchars($fila['correo_usuario']); ?>?</p>
+                            <h2>Eliminación de producto</h2>
+                            <p>¿Está seguro de eliminar al producto <?php echo htmlspecialchars($fila['nombre_producto']); ?>?</p>
                             <div style="display: flex; justify-content: center; gap: 16px; margin-top: 18px;">
-                                <form action="eliminar_usuario.php" method="POST" style="display:inline;">
-                                    <input type="hidden" name="email" value="<?php echo htmlspecialchars($fila['correo_usuario']); ?>">
+                                <form action="eliminar_producto.php" method="POST" style="display:inline;">
+                                    <input type="hidden" name="id" value="<?php echo htmlspecialchars($fila['id_producto']); ?>">
                                     <button type="submit" class="action-btn-table delete-btn">Eliminar</button>
                                 </form>
                                 <form method="dialog" style="display:inline;">
