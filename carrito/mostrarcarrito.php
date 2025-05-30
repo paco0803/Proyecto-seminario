@@ -35,11 +35,11 @@ require_once('../landing/texto.php');
 
       <td width="5%"><button class="btn btn-danger" type="button">Eliminar</button></td>
     </tr>
-    <?php $total=$total+($producto_array['PRECIO']*$producto_array['CANTIDAD']);?>
+   
    <?php }?>
     <tr>
         <td colspan="3"><h3>Total</h3></td>
-        <td><h3>$<?php echo number_format($total,2);?></h3></td>
+        <td><h3>$<?php echo number_format($total_carrito,2);?></h3></td>
         <td></td>
     </tr>
 </tbody>
