@@ -270,7 +270,7 @@ $cantidad_productos = $array_contar['contar'];
                         <button onclick="document.getElementById('<?php echo $modalId; ?>').showModal()" class="action-btn-table delete-btn">Eliminar</button>
                         <dialog id="<?php echo $modalId; ?>">
                             <h2>Eliminación de producto</h2>
-                            <p>¿Está seguro de eliminar al producto <?php echo htmlspecialchars($fila['nombre_producto']); ?>?</p>
+                            <p>¿Está seguro de eliminar al producto  <?php echo htmlspecialchars($fila['nombre_producto']); ?>?</p>
                             <div style="display: flex; justify-content: center; gap: 16px; margin-top: 18px;">
                                 <form action="eliminar_producto.php" method="POST" style="display:inline;">
                                     <input type="hidden" name="id" value="<?php echo htmlspecialchars($fila['id_producto']); ?>">
