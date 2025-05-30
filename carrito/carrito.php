@@ -5,9 +5,11 @@ $sql_productos="SELECT nombre_producto, precio_producto, id_producto FROM produc
 
 
  $resultado_carrito_producto= mysqli_query($conn, $sql_productos);
+ //recibe de boton action
 if (isset($_POST['btnAccion'])) {
     
     switch ($_POST['btnAccion']) {
+        //agregar al carrito
         case 'Agregar':
             if (is_numeric($_POST['id_producto'])||is_numeric($_POST['id_usuario'])) {
                 $mensaje= $resultado_carrito_producto."Cargado corectamente" ;
@@ -25,6 +27,7 @@ if (isset($_POST['btnAccion'])) {
                 $mensaje="Producto Agregado al carrito";
 
             }else{
+                //producto existente
 
                 $id_productos_carrito=array_column($_SESSION['CARRITO']);
                 if(in_array($id,$id_productos_carrito)){
@@ -43,6 +46,7 @@ if (isset($_POST['btnAccion'])) {
             }
             
             break;
+            //Eliminar del carrito
             case "ELiminar":
                 if (is_numeric($_POST['id_producto'])) {
                     $id=$_POST['id_producto'];
