@@ -42,7 +42,7 @@ $sql = "INSERT INTO usuarios (correo_usuario, clave_usuario, nombre_usuario, ape
 VALUES ('$email_nuevo_usuario', '$password_encriptado_nuevo_usuario', '$nombres_nuevo_usuario', '$apellidos_nuevo_usuario', '$tipo_nuevo_usuario')";
 
 if (mysqli_query($conn, $sql)) {
-    if($_SESSION['tipo'] = 1){
+    if($_SESSION['tipo'] == 1){
         header("location: ../admin/creacion_exitosa.php?email=$email_nuevo_usuario");
     }else{
         header("location: registro_exitoso.php?email=$email_nuevo_usuario");  
@@ -50,7 +50,7 @@ if (mysqli_query($conn, $sql)) {
 } else {
     echo "Error: " . $sql . "<br>" . mysqli_error($conn);
 }
-
+    
 mysqli_close($conn);
 
 exit(); 
