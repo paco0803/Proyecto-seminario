@@ -25,6 +25,7 @@ $fila = mysqli_fetch_array($query); #Creacion de un array con el usuario traido 
 
 if(mysqli_num_rows($query)>0){ #Verificacion de existencia del usuario con las credenciales introducidas
     #Asignacion a variables de sesion lo que nos trajo la query
+    $_SESSION['id_usuario'] = $fila['id_usuario'];
     $_SESSION['tipo'] = $fila['tipo_usuario'];
     $_SESSION['email'] = $email;
     $_SESSION['nombre'] = $fila['nombre_usuario'];

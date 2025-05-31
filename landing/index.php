@@ -51,30 +51,35 @@ if (isset($_POST['abrir_modal'])) {
                
         </div>
 
-        <div class="contenedor_botones">
-            <?php
-            //validacion para mostar dos botones si la variable de sesion es diferente a 2(cliente)
-             if(isset($_SESSION['tipo']) != 2){
-                ?>
-            <a href="../login/login_index.php">
-                <button>Iniciar Sesion</button>    
-            </a>
-            <a href="../sign_in/registro_index.php">
-                <button>Registrarse</button>
-            </a>
-            <?php  }else{?>
-           
-             <form method="post">
-                <button type="submit" name="abrir_modal">Cerrar Sesion</button>
-            </form>
 
-             <form method="post" action="#">
-                <button type="submit" class="boton_carrito">
-                   <i class="fa-solid fa-cart-shopping" id="carrito"style="font-size: 20px;"></i>
-                </button>
-            </form>
-            <?php
-            } ?>
+<div class="contenedor_botones">
+<?php
+// Validación para mostrar dos botones si la variable de sesión es diferente a 2 (cliente)
+if (!isset($_SESSION['tipo']) || $_SESSION['tipo'] != 2) {
+    ?>
+    <a href="../login/login_index.php">
+        <button>Iniciar Sesion</button>    
+    </a>
+    <a href="../sign_in/registro_index.php">
+        <button>Registrarse</button>
+    </a>
+<?php } else { ?>
+    <form method="post">
+        <button type="submit" name="abrir_modal">Cerrar Sesion</button>
+    </form>
+    <form action="../carrito/mostrarcarrito.php" method="post"  style="display:inline;">
+        <input type="hidden" name="ver_carrito" value="1">
+        <button type="submit" class="boton_carrito" title="Ver carrito" style="position: relative; display: inline-block;">
+            <i class="fa-solid fa-cart-shopping" id="carrito"></i>
+            <?php if(isset($_SESSION['CARRITO']) && count($_SESSION['CARRITO']) > 0): ?>
+                <span class="carrito-contador">
+                    <?php echo count($_SESSION['CARRITO']); ?>
+                </span>
+            <?php endif; ?>
+        </button>
+    </form>
+<?php } ?>
+</div>
           
             
         </div>
