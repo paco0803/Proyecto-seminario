@@ -261,7 +261,8 @@ $cantidad_productos = $array_contar['contar'];
                             <input type="hidden" name="nombre" value="<?php echo htmlspecialchars($fila['nombre_producto']); ?>">
                             <input type="hidden" name="cantidad" value="<?php echo htmlspecialchars($fila['cantidad_producto']); ?>">
                             <input type="hidden" name="descripcion" value="<?php echo htmlspecialchars($fila['descripcion_producto']); ?>">
-                            <input type="hidden" name="categoria" value="<?php echo htmlspecialchars($fila['nombre_categoria']); ?>">
+                            <input type="hidden" name="categoria" value="<?php echo htmlspecialchars($fila['id_categoria']); ?>">
+                            <input type="hidden" name="precio" value="<?php echo htmlspecialchars($fila['precio_producto']); ?>">
                             <button type="submit" class="action-btn-table edit-btn">Editar</button>
                         </form>
                     </td>
