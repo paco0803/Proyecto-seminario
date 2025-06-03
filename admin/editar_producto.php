@@ -7,6 +7,7 @@ $id = $_POST['id'];
 $nombre = $_POST['nombre'];
 $cantidad = $_POST['cantidad'];
 $descripcion = $_POST['descripcion'];
+$precio = $_POST['precio'];
 $categoria = $_POST['categoria'];
 
 include ('../conexion.php');
@@ -142,6 +143,11 @@ $categorias= mysqli_fetch_all($resultado, MYSQLI_ASSOC);
                 <input type="text" id="descripcion" name="descripcion" value="<?php echo htmlspecialchars($descripcion); ?>" required>
                 <div id="descripcionError" class="error-message">La descripción es obligatoria.</div>
             </div>
+                <div class="form-group">
+                <label for="precio">Precio</label>
+                <input type="text" id="precio" name="precio" value="<?php echo htmlspecialchars($precio); ?>" required>
+                <div id="descripcionError" class="error-message">El precio es obligatorio.</div>
+            </div>
             <div class="form-group">
                 <label for="categoria">Categoría</label>
                 <select id="categoria" name="categoria" required>
@@ -158,58 +164,52 @@ $categorias= mysqli_fetch_all($resultado, MYSQLI_ASSOC);
             <button type="submit" class="submit_button">Guardar Cambios</button>
         </form>
     </div>
-    <script>
-      function validarFormulario() {
-        let valido = true;
+  <script>
+function validarFormulario() {
+    let valido = true;
 
-        const nombre = document.getElementById('nombre_producto');
-        const cantidad = document.getElementById('cantidad');
-        const descripcion = document.getElementById('descripcion');
-        const categoria = document.getElementById('categoria');
+    // Obtener campos
+    const nombre = document.getElementById('nombre');
+    const descripcion = document.getElementById('descripcion');
+    const precio = document.getElementById('precio');
+    const cantidad = document.getElementById('cantidad');
+    const categoria = document.getElementById('categoria');
 
-        // Validar nombre
-        if (!nombre.value.trim()) {
-            mostrarError('nombreError');
-            valido = false;
-        } else {
-            ocultarError('nombreError');
-        }
+    // Limpiar mensajes previos
+    document.querySelectorAll('.error-message').forEach(e => e.textContent = '');
 
-        // Validar cantidad (debe ser número y mayor o igual a 0)
-        if (!cantidad.value.trim() || isNaN(cantidad.value) || Number(cantidad.value) < 0) {
-            mostrarError('cantidadError');
-            valido = false;
-        } else {
-            ocultarError('cantidadError');
-        }
+    // Validar nombre
+    if (!nombre.value.trim()) {
+        nombre.nextElementSibling.textContent = 'El nombre es obligatorio';
+        valido = false;
+    }
 
-        // Validar descripcion
-        if (!descripcion.value.trim()) {
-            mostrarError('descripcionError');
-            valido = false;
-        } else {
-            ocultarError('descripcionError');
-        }
+    // Validar descripción
+    if (!descripcion.value.trim()) {
+        descripcion.nextElementSibling.textContent = 'La descripción es obligatoria';
+        valido = false;
+    }
 
-        // Validar categoria
-        if (!categoria.value) {
-            mostrarError('categoriaError');
-            valido = false;
-        } else {
-            ocultarError('categoriaError');
-        }
+    // Validar precio (número positivo)
+    if (!precio.value.trim() || isNaN(precio.value) || Number(precio.value) <= 0) {
+        precio.nextElementSibling.textContent = 'Ingrese un precio válido y positivo';
+        valido = false;
+    }
 
-        return valido;
-      }
+    // Validar cantidad (entero positivo)
+    if (!cantidad.value.trim() || isNaN(cantidad.value) || !Number.isInteger(Number(cantidad.value)) || Number(cantidad.value) < 0) {
+        cantidad.nextElementSibling.textContent = 'Ingrese una cantidad válida (entero positivo)';
+        valido = false;
+    }
 
-      function mostrarError(id) {
-          let el = document.getElementById(id);
-          if (el) el.style.display = 'block';
-      }
-      function ocultarError(id) {
-          let el = document.getElementById(id);
-          if (el) el.style.display = 'none';
-      }
-    </script>
+    // Validar categoría
+    if (!categoria.value) {
+        categoria.nextElementSibling.textContent = 'Seleccione una categoría';
+        valido = false;
+    }
+
+    return valido;
+}
+</script>
 </body>
 </html>

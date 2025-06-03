@@ -2,7 +2,14 @@
 session_start();
 require_once('validar_admin.php');
 validar_admin();
-$email = $_GET['email']
+
+if(isset ($_GET['email']) ){
+    $email = $_GET['email'];
+}
+
+if(isset($_GET['nombre'])){
+    $nombre = $_GET['nombre'];
+}
 ?>
 
 <!DOCTYPE html>
@@ -10,9 +17,8 @@ $email = $_GET['email']
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Registro de Usuarios</title>
+    <title>Edición Exitosa</title>
     <link rel="stylesheet" href="../estilos/estilos_login.css">
-
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -24,7 +30,6 @@ $email = $_GET['email']
             align-items: center;
             min-height: 100vh;
         }
-        
         .container {
             background-color: white;
             padding: 30px;
@@ -32,50 +37,18 @@ $email = $_GET['email']
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
             width: 100%;
             max-width: 500px;
-        }
-        
-        h1 {
             text-align: center;
+        }
+        h1 {
             color: #333;
             margin-bottom: 30px;
         }
-        
-        .form-group {
-            margin-bottom: 20px;
+        .success-message {
+            color: #4a90e2;
+            font-size: 1.2rem;
+            margin-bottom: 24px;
         }
-        
-        label {
-            display: block;
-            margin-bottom: 8px;
-            font-weight: bold;
-            color: #555;
-        }
-        
-        input[type="text"],
-        input[type="email"],
-        select {
-            width: 100%;
-            padding: 12px;
-            border: 1px solid #ddd;
-            border-radius: 4px;
-            box-sizing: border-box;
-            font-size: 16px;
-        }
-        
-        input[type="text"]:focus,
-        input[type="email"]:focus,
-        select:focus {
-            border-color: #4a90e2;
-            outline: none;
-            box-shadow: 0 0 5px rgba(74, 144, 226, 0.3);
-        }
-        
-        .required-field::after {
-            content: " *";
-            color: red;
-        }
-        
-        button {
+        .volver-btn {
             background-color: #4a90e2;
             color: white;
             border: none;
@@ -85,29 +58,26 @@ $email = $_GET['email']
             font-size: 16px;
             width: 100%;
             transition: background-color 0.3s;
+            text-decoration: none;
+            display: inline-block;
         }
-        
-        button:hover {
+        .volver-btn:hover {
             background-color: #357ab8;
-        }
-        
-        .error-message {
-            color: red;
-            font-size: 14px;
-            margin-top: 5px;
-            display: none;
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <h1>Edicion exitosa</h1>
-        <h3>El usuario con correo electrónico: <?php echo $email; ?> se registro exitosamente</h3>
-         <a href="admin.php">
-                <button class="submit_button">Volver al panel administrativo    </button>
-            </a>
+        <h1>Edición exitosa</h1>
+        <?php 
+        if(isset($email)){
+            echo '<div class="success-message">El usuario con correo electrónico <b>'.$email.'</b> se modificó exitosamente.</div>';
+        }
+        if(isset($nombre)){
+            echo '<div class="success-message">El producto <b>'.$nombre.'</b> se modificó exitosamente.</div>';
+        }
+        ?>
+        <a href="admin.php" class="volver-btn">Volver al panel administrativo</a>
     </div>
-
-   
 </body>
 </html>
