@@ -11,27 +11,34 @@ if (!$conexion) {
     die("Connection failed: " . mysqli_connect_error());
 }
 
-//Paginación
+// Buscador
+$busqueda = isset($_GET['busqueda']) ? trim($_GET['busqueda']) : '';
+
+// Paginación
 $productos_por_pagina = 6;
 $pagina = isset($_GET['pagina']) ? (int)$_GET['pagina'] : 1;
 if ($pagina < 1) $pagina = 1;
 $offset = ($pagina - 1) * $productos_por_pagina;
 
-// Consulta para traer productos con paginación
-$query = "SELECT * FROM productos INNER JOIN categorias on productos.id_categoria = categorias.id_categoria LIMIT $productos_por_pagina OFFSET $offset";
+// Filtro de búsqueda
+$where = "";
+if ($busqueda !== '') {
+    $busqueda_sql = mysqli_real_escape_string($conexion, $busqueda);
+    $where = "WHERE productos.nombre_producto LIKE '%$busqueda_sql%' OR productos.descripcion_producto LIKE '%$busqueda_sql%' OR categorias.nombre_categoria LIKE '%$busqueda_sql%'";
+}
+
+// Consulta para traer productos con paginación y búsqueda
+$query = "SELECT * FROM productos INNER JOIN categorias on productos.id_categoria = categorias.id_categoria $where LIMIT $productos_por_pagina OFFSET $offset";
 $productos_p = mysqli_query($conexion, $query);
 
-
-$query = "SELECT * from productos INNER JOIN categorias on productos.id_categoria = categorias.id_categoria";
-$productos= mysqli_query($conexion, $query);
-$query_contar = "SELECT COUNT(*) as contar from productos";
+// Total de productos y páginas (con filtro)
+$query_contar = "SELECT COUNT(*) as contar from productos INNER JOIN categorias on productos.id_categoria = categorias.id_categoria $where";
 $consulta_contar = mysqli_query($conexion,$query_contar);
 $array_contar = mysqli_fetch_array($consulta_contar);
 $cantidad_productos = $array_contar['contar'];
 $total_paginas = ceil($cantidad_productos / $productos_por_pagina);
 
 ?>
-
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -145,6 +152,34 @@ $total_paginas = ceil($cantidad_productos / $productos_por_pagina);
             color: #2d3e50;
             margin-top: 2px;
         }
+        .buscador-productos {
+            margin: 0 auto 18px auto;
+            max-width: 400px;
+            display: flex;
+            gap: 8px;
+            justify-content: center;
+        }
+        .buscador-productos input[type="text"] {
+            padding: 8px 12px;
+            border-radius: 5px;
+            border: 1px solid #4a90e2;
+            font-size: 1rem;
+            width: 220px;
+        }
+        .buscador-productos button {
+            padding: 8px 18px;
+            border-radius: 5px;
+            border: none;
+            background: #4a90e2;
+            color: #fff;
+            font-size: 1rem;
+            cursor: pointer;
+            font-weight: 600;
+            transition: background 0.2s;
+        }
+        .buscador-productos button:hover {
+            background: #357ab8;
+        }
         h1 {
             color: #2d3e50;
             margin-bottom: 18px;
@@ -257,6 +292,7 @@ $total_paginas = ceil($cantidad_productos / $productos_por_pagina);
             </div>
             <a href="crear_producto.php" class="action-btn">Insertar nuevo producto</a>
             <a href="admin.php" class="action-btn">Usuarios</a>
+            <a href="categorias.php" class="action-btn">Categorias</a>
             <a href="../cerrar_sesion.php" class="action-btn cerrar-sesion">Cerrar sesión</a>
         </div>
         <div class="content">
@@ -271,6 +307,13 @@ $total_paginas = ceil($cantidad_productos / $productos_por_pagina);
                     <span class="productos-label">Productos registrados</span>
                 </div>
             </div>
+
+            <!-- Buscador de productos -->
+            <form class="buscador-productos" method="get" action="productos_admin.php">
+                <input type="text" name="busqueda" placeholder="Buscar producto..." value="<?php echo htmlspecialchars($busqueda); ?>">
+                <button type="submit">Buscar</button>
+            </form>
+
             <h1>Lista de Productos</h1>
             <table>
                 <tr>
@@ -299,6 +342,7 @@ $total_paginas = ceil($cantidad_productos / $productos_por_pagina);
                             <input type="hidden" name="descripcion" value="<?php echo htmlspecialchars($fila['descripcion_producto']); ?>">
                             <input type="hidden" name="categoria" value="<?php echo htmlspecialchars($fila['id_categoria']); ?>">
                             <input type="hidden" name="precio" value="<?php echo htmlspecialchars($fila['precio_producto']); ?>">
+                            <input type="hidden" name="imagen" value="<?php echo htmlspecialchars($fila['imagen']); ?>">
                             <button type="submit" class="action-btn-table edit-btn">Editar</button>
                         </form>
                     </td>
@@ -323,26 +367,28 @@ $total_paginas = ceil($cantidad_productos / $productos_por_pagina);
                 <?php endwhile; ?>
             </table>
             <div class="paginacion">
+                <?php
+                // Mantener la búsqueda en la paginación
+                $extra = $busqueda !== '' ? '&busqueda=' . urlencode($busqueda) : '';
+                ?>
                 <?php if ($total_paginas > 1): ?>
                     <?php if ($pagina > 1): ?>
-                        <a href="?pagina=<?php echo $pagina-1; ?>">&laquo; Anterior</a>
+                        <a href="?pagina=<?php echo $pagina-1 . $extra; ?>">&laquo; Anterior</a>
                     <?php endif; ?>
                     <?php
                     for ($i = 1; $i <= $total_paginas; $i++):
                         if ($i == $pagina) {
                             echo "<strong>$i</strong>";
                         } else {
-                            echo "<a href='?pagina=$i'>$i</a>";
+                            echo "<a href='?pagina=$i$extra'>$i</a>";
                         }
                     endfor;
                     ?>
                     <?php if ($pagina < $total_paginas): ?>
-                        <a href="?pagina=<?php echo $pagina+1; ?>">Siguiente &raquo;</a>
+                        <a href="?pagina=<?php echo $pagina+1 . $extra; ?>">Siguiente &raquo;</a>
                     <?php endif; ?>
                 <?php endif; ?>
             </div>
-        </div>
-    </div>
         </div>
     </div>
 </body>
