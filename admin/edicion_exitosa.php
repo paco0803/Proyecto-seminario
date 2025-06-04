@@ -10,6 +10,10 @@ if(isset ($_GET['email']) ){
 if(isset($_GET['nombre'])){
     $nombre = $_GET['nombre'];
 }
+
+if(isset($_GET['nombre_categoria'])){
+    $nombre_categoria = $_GET['nombre_categoria'];
+}
 ?>
 
 <!DOCTYPE html>
@@ -72,12 +76,18 @@ if(isset($_GET['nombre'])){
         <?php 
         if(isset($email)){
             echo '<div class="success-message">El usuario con correo electrónico <b>'.$email.'</b> se modificó exitosamente.</div>';
+            echo '<a href="admin.php" class="volver-btn">Volver al panel administrativo</a>';
         }
         if(isset($nombre)){
             echo '<div class="success-message">El producto <b>'.$nombre.'</b> se modificó exitosamente.</div>';
+            echo '<a href="productos_admin.php" class="volver-btn">Volver al panel administrativo</a>';
+        }
+        if(isset($nombre_categoria)){
+            echo '<div class="success-message">La categoria <b>'.$nombre_categoria.'</b> se modificó exitosamente.</div>';
+            echo '<a href="categorias.php" class="volver-btn">Volver al panel administrativo</a>';
         }
         ?>
-        <a href="admin.php" class="volver-btn">Volver al panel administrativo</a>
+        
     </div>
 </body>
 </html>

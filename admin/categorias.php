@@ -11,37 +11,39 @@ if (!$conexion) {
     die("Connection failed: " . mysqli_connect_error());
 }
 
+// Buscador
 $busqueda = isset($_GET['busqueda']) ? trim($_GET['busqueda']) : '';
 
 // Paginación
-$usuarios_por_pagina = 6;
+$categorias_por_pagina = 6;
 $pagina = isset($_GET['pagina']) ? (int)$_GET['pagina'] : 1;
 if ($pagina < 1) $pagina = 1;
-$offset = ($pagina - 1) * $usuarios_por_pagina;
+$offset = ($pagina - 1) * $categorias_por_pagina;
 
 // Filtro de búsqueda
 $where = "";
 if ($busqueda !== '') {
     $busqueda_sql = mysqli_real_escape_string($conexion, $busqueda);
-    $where = "WHERE correo_usuario LIKE '%$busqueda_sql%' OR nombre_usuario LIKE '%$busqueda_sql%' OR apellido_usuario LIKE '%$busqueda_sql%'";
+    $where = "WHERE nombre_categoria LIKE '%$busqueda_sql%'";
 }
 
-// Consulta para traer usuarios con paginación y búsqueda
-$query = "SELECT * FROM usuarios $where LIMIT $usuarios_por_pagina OFFSET $offset";
-$usuarios = mysqli_query($conexion, $query);
+// Consulta para traer categorías con paginación y búsqueda
+$query = "SELECT * FROM categorias $where LIMIT $categorias_por_pagina OFFSET $offset";
+$categorias_p = mysqli_query($conexion, $query);
 
-// Total de usuarios y páginas (con filtro)
-$query_contar = "SELECT COUNT(*) as contar from usuarios $where";
+// Total de categorías y páginas (con filtro)
+$query_contar = "SELECT COUNT(*) as contar from categorias $where";
 $consulta_contar = mysqli_query($conexion,$query_contar);
 $array_contar = mysqli_fetch_array($consulta_contar);
-$cantidad_usuarios = $array_contar['contar'];
-$total_paginas = ceil($cantidad_usuarios / $usuarios_por_pagina);
+$cantidad_categorias = $array_contar['contar'];
+$total_paginas = ceil($cantidad_categorias / $categorias_por_pagina);
+
 ?>
 <!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <title>Panel de administrador</title>
+    <title>Categorias</title>
     <style>
         body {
             background: #f4f6f8;
@@ -115,56 +117,56 @@ $total_paginas = ceil($cantidad_usuarios / $usuarios_por_pagina);
             flex: 1;
             padding: 36px 32px 28px 32px;
         }
-        .usuarios-card {
+        .productos-card {
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 18px;
+            gap: 14px;
             background: #eaf1fb;
             border-radius: 10px;
             box-shadow: 0 1px 6px rgba(74,144,226,0.08);
-            padding: 22px 0 18px 0;
-            margin-bottom: 32px;
-            max-width: 350px;
+            padding: 16px 0 12px 0;
+            margin-bottom: 28px;
+            max-width: 320px;
             margin-left: auto;
             margin-right: auto;
         }
-        .icono-usuario {
+        .icono-producto {
             display: flex;
             align-items: center;
             justify-content: center;
         }
-        .usuarios-info {
+        .productos-info {
             display: flex;
             flex-direction: column;
             align-items: flex-start;
         }
-        .usuarios-numero {
-            font-size: 2.6rem;
+        .productos-numero {
+            font-size: 2.1rem;
             font-weight: bold;
             color: #357ab8;
             line-height: 1;
         }
-        .usuarios-label {
-            font-size: 1.1rem;
+        .productos-label {
+            font-size: 1rem;
             color: #2d3e50;
             margin-top: 2px;
         }
-        .buscador-usuarios {
+        .buscador-categorias {
             margin: 0 auto 18px auto;
             max-width: 400px;
             display: flex;
             gap: 8px;
             justify-content: center;
         }
-        .buscador-usuarios input[type="text"] {
+        .buscador-categorias input[type="text"] {
             padding: 8px 12px;
             border-radius: 5px;
             border: 1px solid #4a90e2;
             font-size: 1rem;
             width: 220px;
         }
-        .buscador-usuarios button {
+        .buscador-categorias button {
             padding: 8px 18px;
             border-radius: 5px;
             border: none;
@@ -175,28 +177,31 @@ $total_paginas = ceil($cantidad_usuarios / $usuarios_por_pagina);
             font-weight: 600;
             transition: background 0.2s;
         }
-        .buscador-usuarios button:hover {
+        .buscador-categorias button:hover {
             background: #357ab8;
         }
         h1 {
             color: #2d3e50;
             margin-bottom: 18px;
             text-align: center;
+            font-size: 1.6rem;
         }
         table {
             width: 100%;
             border-collapse: collapse;
             background: #fafbfc;
-            margin-top: 32px;
+            margin-top: 24px;
         }
         th, td {
-            padding: 12px 8px;
+            padding: 8px 6px;
             text-align: left;
+            font-size: 1rem;
         }
         th {
             background: #4a90e2;
             color: #fff;
             font-weight: 600;
+            font-size: 1.1rem;
         }
         tr:nth-child(even) {
             background: #f0f4f8;
@@ -204,29 +209,26 @@ $total_paginas = ceil($cantidad_usuarios / $usuarios_por_pagina);
         tr:hover {
             background: #e6f0fa;
         }
-        .user-type {
-            display: inline-block;
-            padding: 4px 8px;
-            border-radius: 12px;
-            font-size: 12px;
-            font-weight: 600;
-        }
-        .admin{
-            background-color: #2d3e50;
-            color: white;
-        }
-        .cliente{
-            background-color: #357ab8;
-            color: white;
-        }
         .action-form {
             display: inline;
         }
+        .categoria-badge {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 16px;
+            background: #4a90e2;
+            color: white;
+            font-weight: 600;
+            font-size: 0.98rem;
+            box-shadow: 0 1px 3px rgba(33,118,174,0.07);
+            border: 1px solidrgb(245, 245, 245);
+            letter-spacing: 0.5px;
+        }
         .action-btn-table {
-            padding: 6px 16px;
+            padding: 5px 12px;
             border: none;
             border-radius: 4px;
-            font-size: 14px;
+            font-size: 0.95rem;
             font-weight: 600;
             cursor: pointer;
             transition: background 0.2s, color 0.2s;
@@ -248,18 +250,19 @@ $total_paginas = ceil($cantidad_usuarios / $usuarios_por_pagina);
         }
         .paginacion {
             text-align: center;
-            margin-top: 24px;
+            margin-top: 18px;
         }
         .paginacion a, .paginacion strong {
             display: inline-block;
             margin: 0 4px;
-            padding: 6px 12px;
+            padding: 5px 10px;
             border-radius: 4px;
             text-decoration: none;
             color: #4a90e2;
             font-weight: 600;
             background: #eaf1fb;
             transition: background 0.2s, color 0.2s;
+            font-size: 1rem;
         }
         .paginacion a:hover {
             background: #4a90e2;
@@ -287,81 +290,67 @@ $total_paginas = ceil($cantidad_usuarios / $usuarios_por_pagina);
 <body>
     <div class="main-layout">
         <div class="sidebar">
-            <h2>Administración</h2>
+            <h2>Categorias</h2>
             <div class="bienvenida">
                 <?php echo htmlspecialchars('Administrador: '.$_SESSION['nombre'] ." ". $_SESSION['apellido']); ?>
             </div>
-            <a href="crear_usuario.php" class="action-btn">Insertar nuevo usuario</a>
+            <a href="crear_categoria.php" class="action-btn">Insertar nueva categoria</a>
+            <a href="admin.php" class="action-btn">Usuarios</a>
             <a href="productos_admin.php" class="action-btn">Productos</a>
-            <a href="categorias.php" class="action-btn">Categorias</a>
             <a href="../cerrar_sesion.php" class="action-btn cerrar-sesion">Cerrar sesión</a>
         </div>
         <div class="content">
-            <div class="usuarios-card">
-                <div class="icono-usuario">
-                    <svg width="36" height="36" fill="#4a90e2" viewBox="0 0 24 24">
-                        <path d="M12 12c2.967 0 8 1.484 8 4.444V20H4v-3.556C4 13.484 9.033 12 12 12zm0-2c-2.21 0-4-1.79-4-4s1.79-4 4-4 4 1.79 4 4-1.79 4-4 4z"/>
+            <div class="productos-card">
+                <div class="icono-producto">
+                    <!-- Icono de categorías (tres líneas tipo lista) -->
+                    <svg width="40" height="40" fill="#4a90e2" viewBox="0 0 24 24">
+                        <rect x="3" y="6" width="18" height="2" rx="1"/>
+                        <rect x="3" y="11" width="18" height="2" rx="1"/>
+                        <rect x="3" y="16" width="18" height="2" rx="1"/>
                     </svg>
                 </div>
-                <div class="usuarios-info">
-                    <span class="usuarios-numero"><?php echo $cantidad_usuarios; ?></span>
-                    <span class="usuarios-label">Usuarios registrados</span>
+                <div class="productos-info">
+                    <span class="productos-numero"><?php echo $cantidad_categorias; ?></span>
+                    <span class="productos-label">Categorías registradas</span>
                 </div>
             </div>
 
-            <!-- Buscador de usuarios -->
-            <form class="buscador-usuarios" method="get" action="admin.php">
-                <input type="text" name="busqueda" placeholder="Buscar usuario..." value="<?php echo htmlspecialchars($busqueda); ?>">
+            <!-- Buscador de categorías -->
+            <form class="buscador-categorias" method="get" action="categorias.php">
+                <input type="text" name="busqueda" placeholder="Buscar categoría..." value="<?php echo htmlspecialchars($busqueda); ?>">
                 <button type="submit">Buscar</button>
             </form>
 
-            <h1>Lista de Usuarios</h1>
+            <h1>Lista de Categorías</h1>
             <table>
                 <tr>
-                    <th>Correo</th>
                     <th>Nombre</th>
-                    <th>Apellido</th>
-                    <th>Rol</th>
                     <th>Editar</th>
                     <th>Eliminar</th>
                 </tr>
-                <?php while($fila = mysqli_fetch_assoc($usuarios)): ?>
+                <?php while($fila = mysqli_fetch_assoc($categorias_p)): ?>
                 <tr>
-                    <td><?php echo htmlspecialchars($fila['correo_usuario']); ?></td>
-                    <td><?php echo htmlspecialchars($fila['nombre_usuario']); ?></td>
-                    <td><?php echo htmlspecialchars($fila['apellido_usuario']); ?></td>
+                    <td><?php echo htmlspecialchars($fila['nombre_categoria']); ?></td>
                     <td>
-                        <?php   
-                        if($fila['tipo_usuario'] == 1){
-                            echo '<span class="user-type admin">Administrador</span>';
-                        }else{
-                            echo '<span class="user-type cliente">Cliente</span>';
-                        }
-                        ?>
-                    </td>
-                    <td>
-                        <form class="action-form" action="editar_usuario.php" method="POST">
-                            <input type="hidden" name="email" value="<?php echo htmlspecialchars($fila['correo_usuario']); ?>">
-                            <input type="hidden" name="nombre" value="<?php echo htmlspecialchars($fila['nombre_usuario']); ?>">
-                            <input type="hidden" name="apellido" value="<?php echo htmlspecialchars($fila['apellido_usuario']); ?>">
-                            <input type="hidden" name="clave" value="<?php echo htmlspecialchars($fila['clave_usuario']); ?>">
-                            <input type="hidden" name="tipo" value="<?php echo htmlspecialchars($fila['tipo_usuario']); ?>">
+                        <form class="action-form" action="editar_categorias.php" method="POST">
+                            <input type="hidden" name="id" value="<?php echo htmlspecialchars($fila['id_categoria']); ?>">
+                            <input type="hidden" name="nombre" value="<?php echo htmlspecialchars($fila['nombre_categoria']); ?>">
                             <button type="submit" class="action-btn-table edit-btn">Editar</button>
                         </form>
                     </td>
                     <td>
-                        <?php $modalId = 'eliminar_' . md5($fila['correo_usuario']); ?>
+                        <?php $modalId = 'eliminar_' . md5($fila['id_categoria']); ?>
                         <button onclick="document.getElementById('<?php echo $modalId; ?>').showModal()" class="action-btn-table delete-btn">Eliminar</button>
                         <dialog id="<?php echo $modalId; ?>">
-                            <h2>Eliminación de usuario</h2>
-                            <p>¿Está seguro de eliminar al usuario <?php echo htmlspecialchars($fila['correo_usuario']); ?>?</p>
+                            <h2 style="font-size:1.1rem;">Eliminación de categoría</h2>
+                            <p style="font-size:1rem;">¿Está seguro de eliminar la categoría  <?php echo htmlspecialchars($fila['nombre_categoria']); ?>?</p>
                             <div style="display: flex; justify-content: center; gap: 16px; margin-top: 18px;">
-                                <form action="eliminar_usuario.php" method="POST" style="display:inline;">
-                                    <input type="hidden" name="email" value="<?php echo htmlspecialchars($fila['correo_usuario']); ?>">
-                                    <button type="submit" class="action-btn-table delete-btn">Eliminar</button>
+                                <form action="eliminar_categoria.php" method="POST" style="display:inline;">
+                                    <input type="hidden" name="id" value="<?php echo htmlspecialchars($fila['id_categoria']); ?>">
+                                    <button type="submit" class="action-btn-table delete-btn" style="font-size:0.95rem;padding:5px 12px;">Eliminar</button>
                                 </form>
                                 <form method="dialog" style="display:inline;">
-                                    <button type="submit">Cancelar</button>
+                                    <button type="submit" style="font-size:0.95rem;padding:5px 12px;">Cancelar</button>
                                 </form>
                             </div>
                         </dialog>
