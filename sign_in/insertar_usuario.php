@@ -34,8 +34,14 @@ if(!$consulta_email){
     $numResults = $consulta_email->num_rows;
 }
 if ($numResults != 0) {
-    header("Location: email_existente.php?email_usuario=$email_nuevo_usuario");
-    exit(); 
+    if(isset($_SESSION['tipo']) && $_SESSION['tipo'] == 1){
+        header("location: ../admin/crear_usuario.php?modal=true");
+        exit();
+    }else{
+        header("Location: registro_index.php?modal=true");
+        exit(); 
+    }
+    
     }
 
 $sql = "INSERT INTO usuarios (correo_usuario, clave_usuario, nombre_usuario, apellido_usuario, tipo_usuario) 

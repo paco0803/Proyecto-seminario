@@ -11,13 +11,22 @@ if (!$conexion) {
     die("Connection failed: " . mysqli_connect_error());
 }
 
-#Consulta para traer usuarios
-$query = "SELECT * from usuarios";
-$usuarios= mysqli_query($conexion, $query);
+// Paginación
+$usuarios_por_pagina = 6;
+$pagina = isset($_GET['pagina']) ? (int)$_GET['pagina'] : 1;
+if ($pagina < 1) $pagina = 1;
+$offset = ($pagina - 1) * $usuarios_por_pagina;
+
+// Consulta para traer usuarios con paginación
+$query = "SELECT * FROM usuarios LIMIT $usuarios_por_pagina OFFSET $offset";
+$usuarios = mysqli_query($conexion, $query);
+
+// Total de usuarios y páginas
 $query_contar = "SELECT COUNT(*) as contar from usuarios";
 $consulta_contar = mysqli_query($conexion,$query_contar);
 $array_contar = mysqli_fetch_array($consulta_contar);
 $cantidad_usuarios = $array_contar['contar'];
+$total_paginas = ceil($cantidad_usuarios / $usuarios_por_pagina);
 ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -200,6 +209,29 @@ $cantidad_usuarios = $array_contar['contar'];
         .delete-btn:hover {
             background: #c0392b;
         }
+        .paginacion {
+            text-align: center;
+            margin-top: 24px;
+        }
+        .paginacion a, .paginacion strong {
+            display: inline-block;
+            margin: 0 4px;
+            padding: 6px 12px;
+            border-radius: 4px;
+            text-decoration: none;
+            color: #4a90e2;
+            font-weight: 600;
+            background: #eaf1fb;
+            transition: background 0.2s, color 0.2s;
+        }
+        .paginacion a:hover {
+            background: #4a90e2;
+            color: #fff;
+        }
+        .paginacion strong {
+            background: #4a90e2;
+            color: #fff;
+        }
         @media (max-width: 900px) {
             .main-layout {
                 flex-direction: column;
@@ -292,6 +324,25 @@ $cantidad_usuarios = $array_contar['contar'];
                 </tr>
                 <?php endwhile; ?>
             </table>
+            <div class="paginacion">
+                <?php if ($total_paginas > 1): ?>
+                    <?php if ($pagina > 1): ?>
+                        <a href="?pagina=<?php echo $pagina-1; ?>">&laquo; Anterior</a>
+                    <?php endif; ?>
+                    <?php
+                    for ($i = 1; $i <= $total_paginas; $i++):
+                        if ($i == $pagina) {
+                            echo "<strong>$i</strong>";
+                        } else {
+                            echo "<a href='?pagina=$i'>$i</a>";
+                        }
+                    endfor;
+                    ?>
+                    <?php if ($pagina < $total_paginas): ?>
+                        <a href="?pagina=<?php echo $pagina+1; ?>">Siguiente &raquo;</a>
+                    <?php endif; ?>
+                <?php endif; ?>
+            </div>
         </div>
     </div>
 </body>

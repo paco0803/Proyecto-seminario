@@ -6,6 +6,7 @@ require_once('./productos.php');
 require_once('./texto.php');
 require_once('./busqueda.php');
 require_once('../modal.php');
+require_once('../carrito/cargar_carrito.php');
 //para conectar a la base de datos
 $conn = conexionBD();
 //creamos variables y asignamos valor a la varible para poder filtrar por categoria
@@ -21,6 +22,10 @@ if(isset($_POST['nombre_producto'])){
  //para abrir modal y cerrar la sesion 
 if (isset($_POST['abrir_modal'])) {
     echo modal($titulo="Cerrar Sesion", $texto="¿Estás seguro de que deseas cerrar tu sesión?",$usar=1,$textoboton="Cerrar Sesion",$url="../cerrar_sesion.php"); // Ejecutamos la función   
+}
+
+if(isset($_SESSION['tipo']) && $_SESSION['tipo'] == 2){
+    guardar_carrito_en_sesion();
 }
 
 

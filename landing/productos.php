@@ -12,7 +12,7 @@
         if ($nombreProducto == null) {
 
             if ($idCategoria == null) {
-                $sql_productos = "SELECT nombre_producto, precio_producto, id_producto FROM productos";
+                $sql_productos = "SELECT nombre_producto, precio_producto, id_producto, imagen FROM productos";
                 $resultado_producto = mysqli_query($conn, $sql_productos);
 
                 $productos = mysqli_fetch_all($resultado_producto, MYSQLI_ASSOC);
@@ -36,7 +36,7 @@
                 }
             } else {
 
-                $sql_productos = "SELECT nombre_producto, precio_producto, id_producto FROM productos WHERE id_categoria=$idCategoria";
+                $sql_productos = "SELECT nombre_producto, precio_producto, id_producto, imagen FROM productos WHERE id_categoria=$idCategoria";
                 $resultado_producto = mysqli_query($conn, $sql_productos);
 
                 $productos = mysqli_fetch_all($resultado_producto, MYSQLI_ASSOC);

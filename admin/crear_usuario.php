@@ -2,6 +2,11 @@
 session_start();
 require_once('validar_admin.php');
 validar_admin();
+
+require_once('../modal.php');
+if(isset($_GET['modal'])){
+    echo modal("Usuario ya existente", "El usuario ya esta registrado en el sistema", 1, "Volver al panel", "admin.php");
+}
 ?>
 <!DOCTYPE html>
 <html lang="es">

@@ -1,3 +1,11 @@
+<?php
+require_once('../modal.php');
+if(isset($_GET['modal'])){
+    echo modal("Acceso denegado", "Los datos de inicio no son coiciden", 1, "Pagina principal", "../landing/index.php");
+}
+?>
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>

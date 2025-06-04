@@ -1,3 +1,10 @@
+<?php
+require_once('../modal.php');
+if(isset($_GET['modal'])){
+    echo modal("Usuario ya existente", "El usuario ya esta registrado en el sistema", 1, "Pagina principal", "../landing/index.php");
+}
+?>
+
 <!DOCTYPE html>
 <html lang="es">
 <head>
