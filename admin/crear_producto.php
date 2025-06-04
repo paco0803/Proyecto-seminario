@@ -13,6 +13,11 @@ if (!$conexion) {
 
 $query = "SELECT * FROM categorias";
 $consulta = mysqli_query($conexion, $query);
+
+require_once('../modal.php');
+if(isset($_GET['modal'])){
+    echo modal("Producto ya existente", "El producto que deseas añadir ya existe", 1, "Volver al panel", "productos_admin.php");
+}
 ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -20,24 +25,24 @@ $consulta = mysqli_query($conexion, $query);
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Insertar Nuevo Producto</title>
-    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <style>
         body {
-    background: #f4f6f8;
-    font-family: 'Segoe UI', Arial, sans-serif;
-    margin: 0;
-    padding: 0;
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-    }
-    .main-container {
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center; /* Cambia de flex-start a center */
-    }
+            background: #f4f6f8;
+            font-family: 'Segoe UI', Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+        .main-container {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
         h1 {
             color: #2d3e50;
             text-align: center;
@@ -102,6 +107,53 @@ $consulta = mysqli_query($conexion, $query);
         input[type="text"]:focus, select:focus {
             border: 1.5px solid #4a90e2;
             outline: none;
+        }
+        .custom-file-input {
+            position: relative;
+            display: inline-block;
+            width: 100%;
+        }
+        .custom-file-input input[type="file"] {
+            opacity: 0;
+            width: 100%;
+            height: 44px;
+            position: absolute;
+            left: 0;
+            top: 0;
+            cursor: pointer;
+            z-index: 2;
+        }
+        .file-label {
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+            background: #eaf1fb;
+            border: 1px solid #bfc9d1;
+            border-radius: 6px;
+            padding: 10px;
+            font-size: 16px;
+            color: #357ab8;
+            cursor: pointer;
+            transition: border 0.2s, background 0.2s;
+            min-height: 44px;
+            z-index: 1;
+        }
+        .file-label i {
+            margin-right: 10px;
+            color: #4a90e2;
+            font-size: 20px;
+        }
+        .file-label.selected {
+            background: #d0e6fa;
+            border: 1.5px solid #4a90e2;
+            color: #2d3e50;
+        }
+        .file-name {
+            margin-left: 8px;
+            color: #2d3e50;
+            font-size: 15px;
+            font-style: italic;
+            word-break: break-all;
         }
         .error-message {
             color: #e74c3c;
@@ -180,6 +232,19 @@ $consulta = mysqli_query($conexion, $query);
 
         return valido;
     }
+
+    function mostrarNombreArchivo() {
+        const input = document.getElementById('imagen');
+        const label = document.getElementById('fileLabel');
+        const labelText = document.getElementById('fileLabelText');
+        if (input.files && input.files.length > 0) {
+            label.classList.add('selected');
+            labelText.textContent = input.files[0].name;
+        } else {
+            label.classList.remove('selected');
+            labelText.textContent = "Seleccionar archivo...";
+        }
+    }
     </script>
 </head>
 <body>
@@ -192,7 +257,7 @@ $consulta = mysqli_query($conexion, $query);
         <div class="white-section">
             <div class="container">
                 <h2>Insertar nuevo producto</h2>
-                <form id="registroForm" action="insertar_producto.php" method="POST" onsubmit="return validarFormulario()">
+                <form id="registroForm" action="insertar_producto.php" method="POST" enctype="multipart/form-data" onsubmit="return validarFormulario()">
                     <div class="form-group">
                         <label for="nombre">Nombre:</label>
                         <input type="text" id="nombre" name="nombre" required>
@@ -211,6 +276,17 @@ $consulta = mysqli_query($conexion, $query);
                     <div class="form-group">
                         <label for="cantidad">Cantidad:</label>
                         <input type="text" id="cantidad" name="cantidad" required>
+                        <div class="error-message"></div>
+                    </div>
+                    <div class="form-group">
+                        <label for="imagen">Imagen:</label>
+                        <div class="custom-file-input">
+                            <label for="imagen" class="file-label" id="fileLabel">
+                                <i class="fa-solid fa-image"></i>
+                                <span id="fileLabelText">Seleccionar archivo...</span>
+                            </label>
+                            <input type="file" id="imagen" name="imagen" required onchange="mostrarNombreArchivo()">
+                        </div>
                         <div class="error-message"></div>
                     </div>
                     <div class="form-group">
