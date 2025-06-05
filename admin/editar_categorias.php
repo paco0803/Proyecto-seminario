@@ -3,16 +3,36 @@ session_start();
 require_once('validar_admin.php');
 validar_admin();
 
-$id = $_POST['id'];
-$nombre = $_POST['nombre'];
-
-
 include ('../conexion.php');
 $conexion = conexionBD();
 mysqli_set_charset($conexion, "utf8");
 
 if (!$conexion) {
     die("Connection failed: " . mysqli_connect_error());
+}
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $id = $_POST['id'];
+    $nombre = $_POST['nombre'];
+
+    //variables de sesion para el uso correcto del modal
+
+    $_SESSION['id'] = $id;
+    $_SESSION['nombre'] = $nombre;
+
+} elseif (isset($_GET['modal'])) {
+
+    $id = $_SESSION['id'];
+    $nombre =  $_SESSION['nombre'];
+
+} else {
+    header('Location: categorias.php');
+    exit();
+}
+
+if (isset($_GET['modal'])) {
+    require_once('../modal.php');
+    echo modal("Categoria ya existente", "El nombre de la categoria ya esta en uso", 1, "Volver", "categorias.php");
 }
 ?>
 

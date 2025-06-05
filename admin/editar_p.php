@@ -19,6 +19,20 @@ $categoria = $_POST['categoria'];
 $precio = $_POST['precio'];
 $imagen = $_FILES['imagen'];
 
+//confirmacion de producto existente
+
+$confirmacion = strtolower(trim($nombre));
+
+$query_confirmacion= "SELECT id_producto FROM productos 
+    WHERE id_producto != '$id' AND LOWER(TRIM(nombre_producto)) = '$confirmacion'";
+    
+$consulta_confirmacion= mysqli_query($conexion, $query_confirmacion);
+
+if(mysqli_num_rows($consulta_confirmacion) > 0){
+    header('location: editar_producto.php?modal=true');
+    exit();
+}
+
 $nombre_imagen_final = null;
 if (isset($_FILES['imagen']) && $_FILES['imagen']['name'] != "") {
     $tipo_archivo = $_FILES['imagen']['type'];
