@@ -14,6 +14,18 @@ if (!$conexion) {
 $id = $_POST['id'];
 $nombre = $_POST['nombre_categoria'];
 
+$confirmacion = strtolower(trim($nombre));
+
+$query_confirmacion= "SELECT id_categoria FROM categorias 
+    WHERE id_categoria != '$id' AND LOWER(TRIM(nombre_categoria)) = '$confirmacion'";
+    
+$consulta_confirmacion= mysqli_query($conexion, $query_confirmacion);
+
+if(mysqli_num_rows($consulta_confirmacion) > 0){
+    header('location: editar_categorias.php?modal=true');
+    exit();
+}
+
 $query = "UPDATE categorias SET 
     nombre_categoria = '$nombre'
     WHERE id_categoria = '$id'";

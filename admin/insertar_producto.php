@@ -11,6 +11,9 @@ $categoria = $_POST['categoria'];
 $precio = $_POST['precio'];
 $imagen = $_FILES['imagen']['name'];
 
+$nombre_confirmacion = strtolower(string: trim($nombre));
+
+
 include ('../conexion.php');
 $conn = conexionBD();
 //Estableciendo caracteres UTF8 para BD, importante para acentos y eñes en MySQL                            
@@ -24,15 +27,17 @@ if (!$conn) {
 
 //Comprobación que la dirección de email no esté registrada
 
-$consulta_productos = mysqli_query($conn, "SELECT * FROM productos WHERE nombre_producto = '$nombre'");
+$consulta_productos = mysqli_query($conn, "SELECT * FROM productos WHERE LOWER(TRIM(nombre_producto)) = '$nombre_confirmacion'");
 
 if(!$consulta_productos){
     echo "No se realizo la consulta";
-}else{
+    exit();
+} else {
     $numResults = $consulta_productos->num_rows;
 }
+
 if ($numResults != 0) {
-    header(header: "location: crear_producto.php?modal=true");
+    header("Location: crear_producto.php?modal=true");
     exit();
 }
 

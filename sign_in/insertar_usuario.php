@@ -14,6 +14,8 @@ if(isset($_POST['tipo_usuario'])){
 echo  $tipo_nuevo_usuario;
 $password_encriptado_nuevo_usuario = md5($password_nuevo_usuario);
 
+$nombre_confirmacion = strtolower(string: trim($nombre));
+
 $conn = conexionBD();
 //Estableciendo caracteres UTF8 para BD, importante para acentos y eñes en MySQL                            
 mysqli_set_charset($conn, "utf8");

@@ -3,20 +3,52 @@ session_start();
 require_once('validar_admin.php');
 validar_admin();
 
-$id = $_POST['id'];
-$nombre = $_POST['nombre'];
-$cantidad = $_POST['cantidad'];
-$descripcion = $_POST['descripcion'];
-$precio = $_POST['precio'];
-$categoria = $_POST['categoria'];
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $id = $_POST['id'];
+    $nombre = $_POST['nombre'];
+    $cantidad = $_POST['cantidad'];
+    $descripcion = $_POST['descripcion'];
+    $precio = $_POST['precio'];
+    $categoria = $_POST['categoria'];
+
+    //variables de sesion para el uso correcto del modal
+
+    $_SESSION['id'] = $id;
+    $_SESSION['nombre'] = $nombre;
+    $_SESSION['cantidad'] = $cantidad;
+    $_SESSION['descripcion'] = $descripcion;
+    $_SESSION['precio'] = $precio;
+    $_SESSION['categoria'] = $categoria;
+
+} elseif (isset($_GET['modal'])) {
+
+    $id = $_SESSION['id'];
+    $nombre =  $_SESSION['nombre'];
+    $cantidad = $_SESSION['cantidad'];
+    $descripcion = $_SESSION['descripcion'];
+    $precio =  $_SESSION['precio'];
+    $categoria = $_SESSION['categoria'];
+
+} else {
+    header('Location: productos_admin.php');
+    exit();
+}
+
+if (isset($_GET['modal'])) {
+    require_once('../modal.php');
+    echo modal("Producto ya existente", "El nombre del producto ya esta en uso", 1, "Volver", "productos_admin.php");
+}
 
 include ('../conexion.php');
 $conexion = conexionBD();
 mysqli_set_charset($conexion, "utf8");
 
+
 if (!$conexion) {
     die("Connection failed: " . mysqli_connect_error());
 }
+
+
 
 $sql = "SELECT * FROM categorias";
 $resultado = mysqli_query($conexion, $sql);
