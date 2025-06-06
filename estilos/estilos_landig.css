@@ -110,12 +110,49 @@ nav button:hover {
 .productos.hover{
   border: 1px solid red;
 }
-.productos .imagen {
-  margin-top: 0rem;
-  margin-bottom: -2rem;
+.productos {
+  height: 25rem; /* Aumentamos de 20rem a 25rem */
+  /* El resto de tus estilos se mantienen igual */
+  position: relative;
+  display: inline-block;
+  text-align: center;
+  border: 1px solid rgb(0, 0, 0);
+  box-sizing: border-box;
+  border-radius: 10px;
+  width: calc(30% - 1rem);
+  padding: 2.5rem;
+  cursor: pointer;
 }
+
+/* Contenedor de la imagen - Ahora ocupa más espacio */
+.productos .imagen img {
+  width: 100% !important;       /* Ocupa todo el ancho disponible */
+  height: 100% !important;      /* Ocupa toda la altura disponible */
+  object-fit: contain;          /* Mantiene proporciones sin recortar */
+  object-position: center;      /* Centra la imagen */
+  display: block;               /* Elimina espacio fantasma debajo */
+  margin: 0 auto;               /* Centrado horizontal */
+}
+
+/* Ajusta el contenedor para dar más espacio REAL a la imagen */
+.productos .imagen {
+  height: 80%;                  /* 80% del contenedor para la imagen */
+  padding: 0;                   /* Elimina padding interno */
+  margin: 0;                    /* Elimina márgenes externos */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Reduce el espacio del texto para dar más prioridad a la imagen */
+.productos div:not(.imagen) {
+  height: 20%;                  /* Solo 20% para el texto */
+  padding-top: 1rem;            /* Pequeño espacio arriba */
+}
+
 .productos div {
-  margin-top: 11rem;
+  margin-top: auto; /* Cambiado de 11rem a auto */
+  height: 30%; /* El resto del espacio para texto */
 }
 .productos p,
 h2 {
