@@ -1,7 +1,7 @@
 <?php
 function imprimir_productos($producto){
     return '
-        <form method="post" action="link.php?id=' . htmlspecialchars($producto['id_producto']) . '" class="productos">
+        <form method="post" action="detalle_producto?id=' . htmlspecialchars($producto['id_producto']) . '" class="productos">
             <button type="submit" class="boton_producto"></button>
             <div class="imagen">
                 <img src="../imagenes/' . htmlspecialchars($producto['imagen']) . '" alt="Imagen de ' . htmlspecialchars($producto['nombre_producto']) . '" style="max-width:100%;max-height:120px;">
