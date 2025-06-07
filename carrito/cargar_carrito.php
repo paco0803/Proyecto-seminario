@@ -16,10 +16,8 @@ if (!$conexion) {
         header('location: ../landing/index.php');
         exit();
     }
-    $query = "SELECT * FROM producto_carrito pc 
-          INNER JOIN carritos_compra cc on pc.id_carrito = cc.id_carrito 
-          INNER JOIN usuarios u on cc.id_usuario = u.id_usuario 
-          INNER JOIN productos p on pc.id_producto = p.id_producto where cc.id_usuario = '$id_usuario_carrito'";
+    $query = "SELECT * FROM producto_carrito pc
+          INNER JOIN productos p on pc.id_producto = p.id_producto where pc.id_usuario = '$id_usuario_carrito'";
 
     $consulta_carritos = mysqli_query($conexion, $query);
     $carrito_array = [];
