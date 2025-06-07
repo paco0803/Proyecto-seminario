@@ -99,8 +99,11 @@ if (!isset($_SESSION['tipo']) || $_SESSION['tipo'] != 2) {
     require_once("./imprimir_productos.php");
     require_once('../conexion.php');
     
-    $conn = conexionBD();
     $id_producto = $_GET['id'] ?? null; 
+    if(isset($_GET['modal'])){
+        require_once("../modal.php");
+        echo modal("Producto guardado", "EL producto fue guardado exitosamente", 1, "Carrito", "../carrito/mostrarcarrito.php");
+    }
 
     if ($id_producto) {
         $id_producto = filter_var($id_producto, FILTER_SANITIZE_NUMBER_INT);
@@ -127,9 +130,8 @@ if (!isset($_SESSION['tipo']) || $_SESSION['tipo'] != 2) {
                     <p class="precio">' . htmlspecialchars("$" . $producto['precio_producto']) . '</p>
                     
                     ' . (isset($_SESSION['tipo']) && $_SESSION['tipo'] == 2 ? '
-                    <form method="post" action="../carrito/cargar_carrito.php">
+                    <form method="post" action="../carrito/agg_carrito.php">
                         <input type="hidden" name="id_producto" value="' . $producto['id_producto'] . '">
-                         <input type="hidden" name="precio_unitario" value="'. $producto['precio_producto'].'">
                         <label>Cantidad: 
                             <input type="number" name="cantidad" value="1" min="1">
                         </label>
