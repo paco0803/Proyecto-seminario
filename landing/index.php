@@ -27,7 +27,10 @@ if (isset($_POST['abrir_modal'])) {
 if(isset($_SESSION['tipo']) && $_SESSION['tipo'] == 2){
     guardar_carrito_en_sesion();
 }
-
+    $email;
+    if(isset($_SESSION['email'])){
+        $email = $_SESSION['email'];
+    }
 
 ?>
 <!DOCTYPE html>
@@ -69,6 +72,7 @@ if (!isset($_SESSION['tipo']) || $_SESSION['tipo'] != 2) {
         <button>Registrarse</button>
     </a>
 <?php } else { ?>
+    <button type="submit" name="abri"><?php echo htmlspecialchars($email);?></button>
     <form method="post">
         <button type="submit" name="abrir_modal">Cerrar Sesion</button>
     </form>

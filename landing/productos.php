@@ -63,7 +63,7 @@
             if ($nombreProducto != null) {
 
                 $trim_nombre_producto = trim($nombreProducto);
-                $sql = "SELECT nombre_producto, precio_producto, id_producto FROM productos WHERE nombre_producto LIKE '%$trim_nombre_producto%'";
+                $sql = "SELECT nombre_producto, precio_producto, id_producto,  imagen FROM productos WHERE nombre_producto LIKE '%$trim_nombre_producto%'";
                 //uso esta sentencia sql para que la busqueda pueda conseguir todo aquellos productos que contengan la palabra que contenga la variable 
                 $resultado = mysqli_query($conn, $sql);
                 $busqueda_nombre = mysqli_fetch_all($resultado, MYSQLI_ASSOC);
