@@ -53,8 +53,8 @@ if (isset($imagen) && $imagen != "") {
    }
    else {
      $nombre_imagen_final = uniqid() . "_" . basename($imagen);
-      if (move_uploaded_file($temp, 'imagenes/'.$nombre_imagen_final)) {
-          chmod('imagenes/'.$nombre_imagen_final, 0777);
+      if (move_uploaded_file($temp, '../imagenes/'.$nombre_imagen_final)) {
+          chmod('../imagenes/'.$nombre_imagen_final, 0777);
 
       }
       else {
@@ -64,7 +64,7 @@ if (isset($imagen) && $imagen != "") {
 }
 
 $sql = "INSERT INTO productos (nombre_producto, precio_producto, descripcion_producto, id_categoria , cantidad_producto, imagen) 
-VALUES ('$nombre', '$precio', '$descripcion', '$categoria', '$cantidad', '$nombre_imagen_fina'l)";
+VALUES ('$nombre', '$precio', '$descripcion', '$categoria', '$cantidad', '$nombre_imagen_final')";
 
 if (mysqli_query($conn, $sql)) {
    header("location: creacion_exitosa.php?nombre=$nombre");
