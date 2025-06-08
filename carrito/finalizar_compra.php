@@ -35,7 +35,7 @@ while ($row = mysqli_fetch_assoc($res_carrito)) {
     }
 
     // 3. Registrar la compra (una fila por producto en el carrito)
-    $sql_compra = "INSERT INTO compras (id_usuario, fecha_compra, id_pc) VALUES ('$id_usuario', '$fecha', '$id_pc')";
+    $sql_compra = "INSERT INTO compras (id_usuario, fecha_compra, id_producto, cantidad) VALUES ('$id_usuario', '$fecha', '$id_producto', '$cantidad')";
     if (!mysqli_query($conexion, $sql_compra)) {
         $errores[] = "Error al registrar la compra del producto $id_producto";
         continue;
