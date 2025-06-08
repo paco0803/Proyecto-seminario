@@ -4,6 +4,14 @@ require_once('../carrito/cargar_carrito.php');
 if(isset($_SESSION['tipo']) && $_SESSION['tipo'] == 2){
     guardar_carrito_en_sesion();
 }
+
+require_once('../conexion.php');
+$conexion = conexionBD();
+mysqli_set_charset($conexion, "utf8");
+
+if (!$conexion) {
+    die("Connection failed: " . mysqli_connect_error());
+}
 ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -144,6 +152,13 @@ if(isset($_SESSION['tipo']) && $_SESSION['tipo'] == 2){
         <?php 
         $total_carrito = 0;
         foreach ($_SESSION['CARRITO'] as $indice => $producto_array) {
+            // Consulta el stock actual de este producto
+            $id_producto = $producto_array['ID'];
+            $sql_stock = "SELECT cantidad_producto FROM productos WHERE id_producto = '$id_producto'";
+            $res_stock = mysqli_query($conexion, $sql_stock);
+            $row_stock = mysqli_fetch_assoc($res_stock);
+            $stock_disponible = $row_stock ? (int)$row_stock['cantidad_producto'] : 1; // Por seguridad, mínimo 1
+
             $subtotal = $producto_array['precio_producto'] * $producto_array['cantidad'];
             $total_carrito += $subtotal;
         ?>
@@ -152,23 +167,23 @@ if(isset($_SESSION['tipo']) && $_SESSION['tipo'] == 2){
             <td>
                 <form action="actualizar_carrito.php" method="get" style="display:inline;">
                     <input type="hidden" name="id_producto" value="<?php echo htmlspecialchars($producto_array['ID']); ?>">
-                    <input type="number" name="cantidad" class="input-cantidad" min="1" value="<?php echo htmlspecialchars($producto_array['cantidad']); ?>">
+                    <input type="number" name="cantidad" class="input-cantidad" min="1" max="<?php echo $stock_disponible; ?>" value="<?php echo htmlspecialchars($producto_array['cantidad']); ?>">
                     <button type="submit" class="btn btn-actualizar">Actualizar</button>
                 </form>
             </td>
             <td>$<?php echo number_format($producto_array['precio_producto'],2); ?></td>
             <td>$<?php echo number_format($subtotal,2); ?></td>
             <td>
-    <button type="button" class="btn btn-eliminar" onclick="document.getElementById('modal_<?php echo $producto_array['ID']; ?>').showModal();">Eliminar</button>
-    <dialog id="modal_<?php echo $producto_array['ID']; ?>">
-        <h3>¿Eliminar producto?</h3>
-        <p>¿Estás seguro de que deseas eliminar <b><?php echo htmlspecialchars($producto_array['nombre_producto']); ?></b> del carrito?</p>
-        <form method="dialog" style="display:inline;">
-            <button class="btn btn-actualizar" style="margin-right:8px;">Cancelar</button>
-        </form>
-        <a href="eliminar_carrito.php?id_producto=<?php echo htmlspecialchars($producto_array['ID']); ?>" class="btn btn-eliminar">Eliminar</a>
-    </dialog>
-</td>
+                <button type="button" class="btn btn-eliminar" onclick="document.getElementById('modal_<?php echo $producto_array['ID']; ?>').showModal();">Eliminar</button>
+                <dialog id="modal_<?php echo $producto_array['ID']; ?>">
+                    <h3>¿Eliminar producto?</h3>
+                    <p>¿Estás seguro de que deseas eliminar <b><?php echo htmlspecialchars($producto_array['nombre_producto']); ?></b> del carrito?</p>
+                    <form method="dialog" style="display:inline;">
+                        <button class="btn btn-actualizar" style="margin-right:8px;">Cancelar</button>
+                    </form>
+                    <a href="eliminar_carrito.php?id_producto=<?php echo htmlspecialchars($producto_array['ID']); ?>" class="btn btn-eliminar">Eliminar</a>
+                </dialog>
+            </td>
         </tr>
         <?php } ?>
         <tr>
