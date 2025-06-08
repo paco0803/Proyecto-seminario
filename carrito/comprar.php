@@ -28,7 +28,7 @@ if (!isset($_SESSION['CARRITO']) || empty($_SESSION['CARRITO'])) {
             padding: 32px 24px 24px 24px;
         }
         h2 {
-            color: #2176ae;
+            color:rgb(0, 0, 0);
             text-align: center;
             margin-bottom: 24px;
         }
@@ -41,12 +41,13 @@ if (!isset($_SESSION['CARRITO']) || empty($_SESSION['CARRITO'])) {
             overflow: hidden;
         }
         th, td {
+
             padding: 14px 10px;
             text-align: center;
             border-bottom: 1px solid #e0e0e0;
         }
         th {
-            background: #4a90e2;
+            background:rgb(0, 0, 0);
             color: #fff;
             font-size: 1.1rem;
         }
@@ -54,8 +55,9 @@ if (!isset($_SESSION['CARRITO']) || empty($_SESSION['CARRITO'])) {
             border-bottom: none;
         }
         .btn-confirmar {
-            background: #4a90e2;
-            color: #fff;
+             background:rgb(0, 0, 0);
+                        color: #c5ff50;
+
             border: none;
             border-radius: 8px;
             padding: 12px 32px;

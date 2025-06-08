@@ -18,13 +18,14 @@ if (!$conexion) {
 <head>
     <meta charset="UTF-8">
     <title>Carrito de Compras</title>
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <style>
         body {
             background: #f4f8fb;
             font-family: 'Segoe UI', Arial, sans-serif;
         }
         h3 {
-            color: #2176ae;
+            color:rgb(1, 1, 2);
             margin-top: 24px;
             text-align: center;
         }
@@ -50,9 +51,10 @@ if (!$conexion) {
             border-bottom: 1px solid #e0e0e0;
         }
         th {
-            background: #4a90e2;
+            background:rgb(0, 0, 0);
             color: #fff;
             font-size: 1.1rem;
+            color: #c5ff50;
         }
         tr:last-child td {
             border-bottom: none;
@@ -68,11 +70,11 @@ if (!$conexion) {
             margin: 0 2px;
         }
         .btn-eliminar {
-            background: #e74c3c;
+            background: none;
             color: #fff;
         }
         .btn-eliminar:hover {
-            background: #c0392b;
+            background: #c5ff50;
         }
         .btn-actualizar {
             background: #ffd600;
@@ -82,8 +84,8 @@ if (!$conexion) {
             background: #ffe066;
         }
         .btn-comprar {
-            background: #4a90e2;
-            color: #fff;
+            background: #c5ff50;
+            color: black;
             border: none;
             border-radius: 8px;
             padding: 12px 32px;
@@ -96,13 +98,15 @@ if (!$conexion) {
             text-decoration: none;
         }
         .btn-comprar:hover {
-            background: #357ab8;
+            transition: 0.5s;
+            background:rgb(233, 227, 227);
+            color: #c5ff50;
         }
         .input-cantidad {
             width: 60px;
             padding: 5px;
             border-radius: 6px;
-            border: 1px solid #4a90e2;
+            border: 1px solid rgb(255, 255, 255);
             text-align: center;
             font-size: 1rem;
         }
@@ -114,8 +118,8 @@ if (!$conexion) {
         .volver-tienda {
             display: inline-block;
             margin: 24px auto 0 auto;
-            background: #4a90e2;
-            color: #fff;
+             background: #c5ff50;
+            color: black;
             padding: 12px 32px;
             border-radius: 8px;
             text-decoration: none;
@@ -124,7 +128,8 @@ if (!$conexion) {
             transition: background 0.2s;
         }
         .volver-tienda:hover {
-            background: #357ab8;
+               background:rgb(0, 0, 0);
+            color: #c5ff50;
         }
         @media (max-width: 700px) {
             .carrito-container {
@@ -154,7 +159,7 @@ if (!$conexion) {
         foreach ($_SESSION['CARRITO'] as $indice => $producto_array) {
             // Consulta el stock actual de este producto
             $id_producto = $producto_array['ID'];
-            $sql_stock = "SELECT cantidad_producto FROM productos WHERE id_producto = '$id_producto'";
+            $sql_stock = "SELECT cantidad_producto, imagen FROM productos WHERE id_producto = '$id_producto'";
             $res_stock = mysqli_query($conexion, $sql_stock);
             $row_stock = mysqli_fetch_assoc($res_stock);
             $stock_disponible = $row_stock ? (int)$row_stock['cantidad_producto'] : 1; // Por seguridad, mínimo 1
@@ -163,7 +168,11 @@ if (!$conexion) {
             $total_carrito += $subtotal;
         ?>
         <tr>
-            <td><?php echo htmlspecialchars($producto_array['nombre_producto']); ?></td>
+            
+            <td>
+              
+                <?php echo htmlspecialchars($producto_array['nombre_producto']); ?>
+        </td>
             <td>
                 <form action="actualizar_carrito.php" method="get" style="display:inline;">
                     <input type="hidden" name="id_producto" value="<?php echo htmlspecialchars($producto_array['ID']); ?>">
@@ -174,7 +183,8 @@ if (!$conexion) {
             <td>$<?php echo number_format($producto_array['precio_producto'],2); ?></td>
             <td>$<?php echo number_format($subtotal,2); ?></td>
             <td>
-                <button type="button" class="btn btn-eliminar" onclick="document.getElementById('modal_<?php echo $producto_array['ID']; ?>').showModal();">Eliminar</button>
+                <button type="button" class="btn btn-eliminar" onclick="document.getElementById('modal_<?php echo $producto_array['ID']; ?>').showModal();">
+                    <i class="fa-solid fa-trash" style="color: black"> </i></button>
                 <dialog id="modal_<?php echo $producto_array['ID']; ?>">
                     <h3>¿Eliminar producto?</h3>
                     <p>¿Estás seguro de que deseas eliminar <b><?php echo htmlspecialchars($producto_array['nombre_producto']); ?></b> del carrito?</p>

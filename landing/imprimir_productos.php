@@ -11,7 +11,7 @@ function imprimir_productos($producto){
         </div>
         <div style="text-align:center;">
             <h2 style="color:#2d3e50;font-size:1.2rem;margin:10px 0 6px 0;">'.htmlspecialchars($producto['nombre_producto']).'</h2>
-            <p style="color:#4a90e2;font-weight:bold;font-size:1.1rem;margin:0;">'.htmlspecialchars($producto['precio_producto']).'</p>
+            <p style="color:black;font-weight:bold;font-size:1.1rem;margin:0;">'.htmlspecialchars($producto['precio_producto']).'</p>
         </div>
     </a>';
 }
