@@ -27,6 +27,8 @@ if (isset($_POST['abrir_modal'])) {
 if(isset($_SESSION['tipo']) && $_SESSION['tipo'] == 2){
     guardar_carrito_en_sesion();
 }
+
+
 ?>
 
 <!DOCTYPE html>
@@ -109,7 +111,7 @@ if (!isset($_SESSION['tipo']) || $_SESSION['tipo'] != 2) {
         $id_producto = filter_var($id_producto, FILTER_SANITIZE_NUMBER_INT);
         
         // Consulta corregida (sin typo)
-        $sql_producto = "SELECT nombre_producto, precio_producto, id_producto, descripcion_producto, imagen 
+        $sql_producto = "SELECT nombre_producto, precio_producto, id_producto, descripcion_producto, imagen, cantidad_producto 
                         FROM productos 
                         WHERE id_producto = $id_producto";
         $resultado_producto = mysqli_query($conn, $sql_producto);
@@ -133,8 +135,7 @@ if (!isset($_SESSION['tipo']) || $_SESSION['tipo'] != 2) {
                     <form method="post" action="../carrito/agg_carrito.php">
                         <input type="hidden" name="id_producto" value="' . $producto['id_producto'] . '">
                         <label>Cantidad: 
-                            <input type="number" name="cantidad" value="1" min="1">
-                        </label>
+                        <input type="number" name="cantidad" value="1" min="1" max="' . htmlspecialchars($producto['cantidad_producto']) . '">                        </label>
 
                         <div>
                         <button type="submit" class="btn_agregar_carrito">Agregar al carrito</button>
