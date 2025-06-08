@@ -72,7 +72,7 @@ if (!isset($_SESSION['tipo']) || $_SESSION['tipo'] != 2) {
         <button>Registrarse</button>
     </a>
 <?php } else { ?>
-    <button type="submit" name="abri"><?php echo htmlspecialchars($email);?></button>
+    <button type="submit" name="abri" style="padding: 1rem;"><?php echo htmlspecialchars($email);?></button>
     <form method="post">
         <button type="submit" name="abrir_modal">Cerrar Sesion</button>
     </form>
