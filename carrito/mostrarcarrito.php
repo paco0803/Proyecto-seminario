@@ -126,7 +126,13 @@ if (!$conexion) {
             text-align: center;
             font-size: 1rem;
         }
-
+            .modal_eliminar{
+                background-color: #c5ff50;
+                color: black;
+                padding: 0.3rem 1rem;
+                border-radius: 10px;
+                text-decoration: none;
+            }
         .carrito-vacio {
             text-align: center;
             margin-top: 40px;
@@ -219,7 +225,7 @@ if (!$conexion) {
                                     <form method="dialog" style="display:inline;">
                                         <button class="btn btn-actualizar" style="margin-right:8px;">Cancelar</button>
                                     </form>
-                                    <a href="eliminar_carrito.php?id_producto=<?php echo htmlspecialchars($producto_array['ID']); ?>" class="btn btn-eliminar">Eliminar</a>
+                                    <a href="eliminar_carrito.php?id_producto=<?php echo htmlspecialchars($producto_array['ID']); ?>" class="modal_eliminar">Eliminar</a>
                                 </dialog>
                             </td>
                         </tr>
